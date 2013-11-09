@@ -4,13 +4,14 @@
 # http://www.brunningonline.net/simon/python/quick-ref2_0.html
 # http://docs.python.org/release/1.5.1p1/tut/contents.html
 
-#TODO put this up on github
 #TODO make sure the player is always in the dead center
 #TODO collision detection http://stackoverflow.com/questions/8195649/python-pygame-collision-detection-with-rects
+#     make art for some object and make 
 #TODO animation (think earthbound, two frames for each direction, flip for left and
 #     right
 #TODO load json data files
-#TODO game editor, only keyboard controlled for now, keep it updated with features of game
+#TODO game editor, mouse controlled w hotkeys? keep it updated with features of game
+#TODO document all in wiki, where to put todo?
 #TODO interact with people and objects
 #     text and drawing primitives for word balloons and other menus
 #TODO adventure game inventory
@@ -30,6 +31,10 @@ class GameObject:
         self.rect = self.rect.move(location)
     def blit(self, screen):
         screen.blit(self.image, self.rect)
+
+class Player(GameObject):
+    def __init__(self, imagePath, screen):
+
 
 class Field:
     def __init__(self):
