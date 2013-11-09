@@ -4,6 +4,11 @@
 # http://www.brunningonline.net/simon/python/quick-ref2_0.html
 # http://docs.python.org/release/1.5.1p1/tut/contents.html
 
+#TODO get rid of camel case
+#TODO process_events(event)
+#TODO player.move(pygame.key.get_pressed, field)
+#TODO directions are members of field
+#TODO speed should be a member of player
 #TODO collision detection http://stackoverflow.com/questions/8195649/python-pygame-collision-detection-with-rects
 #     make art for some object and make 
 #TODO collision rects of a size different than their images
@@ -11,6 +16,7 @@
 #     right
 #TODO load json data files
 #TODO game editor, mouse controlled w hotkeys? keep it updated with features of game
+#TODO make more images and make more game content with editor
 #TODO document all in wiki, where to put todo?
 #TODO interact with people and objects
 #     text and drawing primitives for word balloons and other menus
@@ -65,6 +71,7 @@ player = Player("assets/images/player.png", screen)
 field = Field()
 
 while 1:
+    #TODO process_events(event)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -72,6 +79,7 @@ while 1:
             if event.key == pygame.K_ESCAPE:
                 sys.exit()
 
+    #TODO player.move(pygame.key.get_pressed, field)
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
         field.move(right)
