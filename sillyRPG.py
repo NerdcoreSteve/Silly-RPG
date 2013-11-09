@@ -4,7 +4,6 @@
 # http://www.brunningonline.net/simon/python/quick-ref2_0.html
 # http://docs.python.org/release/1.5.1p1/tut/contents.html
 
-#TODO make sure the player is always in the dead center
 #TODO collision detection http://stackoverflow.com/questions/8195649/python-pygame-collision-detection-with-rects
 #     make art for some object and make 
 #TODO animation (think earthbound, two frames for each direction, flip for left and
@@ -24,7 +23,7 @@
 
 import sys, pygame
 
-class GameObject:
+class GameObject(object):
     def __init__(self, imagePath, location):
         self.image = pygame.image.load(imagePath)
         self.rect = self.image.get_rect()
@@ -34,9 +33,12 @@ class GameObject:
 
 class Player(GameObject):
     def __init__(self, imagePath, screen):
+        GameObject.__init__(self, imagePath, [0, 0])
+        screenRect = screen.get_rect()
+        self.rect.centerx = screenRect.centerx
+        self.rect.centery = screenRect.centery
 
-
-class Field:
+class Field(object):
     def __init__(self):
         self.fieldObjects = [GameObject("assets/images/grass.png", [0, 0]),
                              GameObject("assets/images/sidewalk.png", [218, 145])]
@@ -54,11 +56,11 @@ up = [0, -1 * speed]
 down = [0, speed]
 
 pygame.init()
-size = width, height = 800, 600
-screen = pygame.display.set_mode(size)
+screenSize = width, height = 800, 600
+screen = pygame.display.set_mode(screenSize)
 black = 0, 0, 0
 
-player = GameObject("assets/images/player.png", [400, 300])
+player = Player("assets/images/player.png", screen)
 field = Field()
 
 while 1:
