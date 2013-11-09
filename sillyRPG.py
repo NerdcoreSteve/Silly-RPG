@@ -6,6 +6,7 @@
 
 #TODO collision detection http://stackoverflow.com/questions/8195649/python-pygame-collision-detection-with-rects
 #     make art for some object and make 
+#TODO collision rects of a size different than their images
 #TODO animation (think earthbound, two frames for each direction, flip for left and
 #     right
 #TODO load json data files
