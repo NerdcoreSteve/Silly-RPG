@@ -1,6 +1,7 @@
 #TODO collision rects of a size different than their images
 #     draw a refrigerator and put it in the grass, make the grass not obst
 #     refrige is obst with separate coll rect
+#TODO transparencies?
 #TODO animation (think earthbound, two frames for each direction, flip for left and
 #     right
 #TODO load json data files
