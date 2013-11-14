@@ -1,0 +1,26 @@
+Game Object should take a list instead of a pygame.Rect
+if field_object.colliderect(player):
+rename Game_Object to Field_Object?
+pygame.Rect or Rect? look for others.
+animation (think earthbound, two frames for each direction, flip for left and
+      right
+transparencies?
+load json data files
+game editor, mouse controlled w hotkeys? keep it updated with features of game
+make more images and make more game content with editor
+document all in wiki, where to put todo?
+interact with people and objects
+      switches and doors and stuff.
+      text and drawing primitives for word balloons and other menus
+      avatars in dialog boxes, timed printing out of dialog
+re-read homestuck for inspiration
+adventure game inventory
+armor, weapons, items, etc
+find items in field, treasure chests, people
+money and shopping
+Battle engine: final fantasy? chrono trigger? earthbound?
+attack, pyshcic powers
+in field, reading minds, pyschic influence, telekinesis to move and retrieve things
+replay or research kotor for inspiration
+experience rewards: items that gain exp?
+limit your feature set so you can finish this thing.

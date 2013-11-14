@@ -1,51 +1,29 @@
-#TODO collision rects of a size different than their images
-#     draw a refrigerator and put it in the grass, make the grass not obst
-#     refrige is obst with separate coll rect
-#TODO transparencies?
-#TODO animation (think earthbound, two frames for each direction, flip for left and
-#     right
-#TODO load json data files
-#TODO game editor, mouse controlled w hotkeys? keep it updated with features of game
-#TODO make more images and make more game content with editor
-#TODO document all in wiki, where to put todo?
-#TODO interact with people and objects
-#     switches and doors and stuff.
-#     text and drawing primitives for word balloons and other menus
-#     avatars in dialog boxes, timed printing out of dialog
-#TODO re-read homestuck for inspiration
-#TODO adventure game inventory
-#TODO armor, weapons, items, etc
-#TODO find items in field, treasure chests, people
-#TODO money and shopping
-#TODO Battle engine: final fantasy? chrono trigger? earthbound?
-#TODO attack, pyshcic powers
-#TODO in field, reading minds, pyschic influence, telekinesis to move and retrieve things
-#TODO replay or research kotor for inspiration
-#TODO experience rewards: items that gain exp?
-#TODO limit your feature set so you can finish this thing.
-
 import sys, pygame
 
 class Game_Object(object):
-    def __init__(self, image_path, location, is_obstacle):
+    def __init__(self, image_path, position_offset, obstacle_rect = 0):
         self.image = pygame.image.load(image_path)
         self.rect = self.image.get_rect()
-        self.rect = self.rect.move(location)
-        self.is_obstacle = is_obstacle
+        self.obstacle_rect = obstacle_rect
+        self.reposition(position_offset)
     def blit(self, screen):
         screen.blit(self.image, self.rect)
+    def reposition(self, position_offset):
+        self.rect = self.rect.move(position_offset)
+        if(self.obstacle_rect):
+            self.obstacle_rect = self.obstacle_rect.move(position_offset)
 
 class Field(object):
     def __init__(self):
-        self.field_objects = [Game_Object("assets/images/grass.png", [0, 0], True),
-                              Game_Object("assets/images/sidewalk.png", [218, 145], False)]
+        self.field_objects = [Game_Object("assets/images/grass.png", [0, 0], pygame.Rect(0, 0, 218, 145)),
+                              Game_Object("assets/images/sidewalk.png", [218, 145])]
     def move(self, direction):
         for field_object in self.field_objects:
-            field_object.rect = field_object.rect.move(direction)
+            field_object.reposition(direction)
     def collision_detected(self, player):
         for field_object in self.field_objects:
-            if field_object.is_obstacle:
-                if field_object.rect.colliderect(player.rect):
+            if field_object.obstacle_rect:
+                if field_object.obstacle_rect.colliderect(player.obstacle_rect):
                     return 1
         return 0
     def blit(self, screen):
@@ -54,10 +32,11 @@ class Field(object):
 
 class Player(Game_Object):
     def __init__(self, image_path, screen):
-        Game_Object.__init__(self, image_path, [0, 0], False)
+        Game_Object.__init__(self, image_path, [0, 0], pygame.Rect(0, 0, 27, 17))
         screen_rect = screen.get_rect()
         self.rect.centerx = screen_rect.centerx
         self.rect.centery = screen_rect.centery
+        self.obstacle_rect = pygame.Rect(self.rect.left + 29, self.rect.top + 75, 25, 15)
     def move(self, direction, field):
         field.move(direction)
         if field.collision_detected(self):
