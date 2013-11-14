@@ -38,6 +38,7 @@ class Player(Animated_Field_Object):
         field.move(direction)
         if field.collision_detected(self):
             field.move([-1 * direction[0], -1 * direction[1]])
+        #change_animation_state("walk " + direction)
 
 class Field(object):
     def __init__(self):
@@ -85,6 +86,7 @@ while 1:
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
         player.move(right, field)
+        #player.move("right", field) #for animation
     if keys[pygame.K_RIGHT]:
         player.move(left, field)
     if keys[pygame.K_DOWN]:
