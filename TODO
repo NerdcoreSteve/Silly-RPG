@@ -1,7 +1,4 @@
-Game Object should take a list instead of a pygame.Rect
-if field_object.colliderect(player):
 rename Game_Object to Field_Object?
-pygame.Rect or Rect? look for others.
 animation (think earthbound, two frames for each direction, flip for left and
       right
 transparencies?
