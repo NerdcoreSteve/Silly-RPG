@@ -19,6 +19,26 @@ class Field_Object(object):
     def collision_detected(self, field_object):
         return self.obstacle_rect.colliderect(field_object.obstacle_rect)
 
+class Animated_Field_Object(Field_Object):
+    def __init__(self, image_path, position_offset, obstacle_rect_points = 0):
+        Field_Object.__init__(self, image_path, position_offset, obstacle_rect_points)
+        #self.states = a dictionary of dictionaries, the first level is the name of
+        #the second level is the paths to the image frames and their time delay
+        #there should be a change state function, and that's it for now,
+        #game while loop or player will handle changing state based on input
+
+class Player(Animated_Field_Object):
+    def __init__(self, image_path, screen):
+        Animated_Field_Object.__init__(self, image_path, [0, 0], [29, 75, 25, 15])
+        screen_rect = screen.get_rect()
+        self.rect.centerx = screen_rect.centerx
+        self.rect.centery = screen_rect.centery
+        self.obstacle_rect = self.obstacle_rect.move([self.rect.left, self.rect.top])
+    def move(self, direction, field):
+        field.move(direction)
+        if field.collision_detected(self):
+            field.move([-1 * direction[0], -1 * direction[1]])
+
 class Field(object):
     def __init__(self):
         self.field_objects = [Field_Object("assets/images/grass.png", [0, 0], [0, 0, 218, 145]),
@@ -35,18 +55,6 @@ class Field(object):
     def blit(self, screen):
         for field_object in self.field_objects:
             field_object.blit(screen)
-
-class Player(Field_Object):
-    def __init__(self, image_path, screen):
-        Field_Object.__init__(self, image_path, [0, 0], [29, 75, 25, 15])
-        screen_rect = screen.get_rect()
-        self.rect.centerx = screen_rect.centerx
-        self.rect.centery = screen_rect.centery
-        self.obstacle_rect = self.obstacle_rect.move([self.rect.left, self.rect.top])
-    def move(self, direction, field):
-        field.move(direction)
-        if field.collision_detected(self):
-            field.move([-1 * direction[0], -1 * direction[1]])
 
 speed = 3
 right = [speed, 0]
