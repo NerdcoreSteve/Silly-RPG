@@ -1,6 +1,6 @@
 import sys, pygame
 
-class Game_Object(object):
+class Field_Object(object):
     def __init__(self, image_path, position_offset, obstacle_rect_points = 0):
         self.image = pygame.image.load(image_path)
         self.rect = self.image.get_rect()
@@ -16,13 +16,13 @@ class Game_Object(object):
         self.rect = self.rect.move(position_offset)
         if(self.obstacle_rect):
             self.obstacle_rect = self.obstacle_rect.move(position_offset)
-    def collision_detected(self, game_object):
-        return self.obstacle_rect.colliderect(game_object.obstacle_rect)
+    def collision_detected(self, field_object):
+        return self.obstacle_rect.colliderect(field_object.obstacle_rect)
 
 class Field(object):
     def __init__(self):
-        self.field_objects = [Game_Object("assets/images/grass.png", [0, 0], [0, 0, 218, 145]),
-                              Game_Object("assets/images/sidewalk.png", [218, 145])]
+        self.field_objects = [Field_Object("assets/images/grass.png", [0, 0], [0, 0, 218, 145]),
+                              Field_Object("assets/images/sidewalk.png", [218, 145])]
     def move(self, direction):
         for field_object in self.field_objects:
             field_object.reposition(direction)
@@ -36,9 +36,9 @@ class Field(object):
         for field_object in self.field_objects:
             field_object.blit(screen)
 
-class Player(Game_Object):
+class Player(Field_Object):
     def __init__(self, image_path, screen):
-        Game_Object.__init__(self, image_path, [0, 0], [29, 75, 25, 15])
+        Field_Object.__init__(self, image_path, [0, 0], [29, 75, 25, 15])
         screen_rect = screen.get_rect()
         self.rect.centerx = screen_rect.centerx
         self.rect.centery = screen_rect.centery

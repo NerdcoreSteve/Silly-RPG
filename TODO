@@ -1,4 +1,3 @@
-rename Game_Object to Field_Object?
 animation (think earthbound, two frames for each direction, flip for left and
       right
 transparencies?
