@@ -68,7 +68,7 @@ screen_size = width, height = 800, 600
 screen = pygame.display.set_mode(screen_size)
 black = 0, 0, 0
 
-player = Player("assets/images/player.png", screen)
+player = Player("assets/images/player/player_front1.png", screen)
 field = Field()
 
 frame_rate = 60

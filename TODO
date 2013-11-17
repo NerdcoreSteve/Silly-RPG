@@ -1,6 +1,7 @@
 animation (think earthbound, two frames for each direction, flip for left and
-      right
-make more objects, stuff she can walk behind
+    I still need to make animations for walking up!!!
+        I need to expand the canvas again
+make more objects, stuff she can walk behind, and stuff that animates
 make npcs with programmable actions/animations/paths
 transparencies
 load json data files
