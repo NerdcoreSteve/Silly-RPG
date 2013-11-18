@@ -1,17 +1,16 @@
-animation (think earthbound, two frames for each direction, flip for left and
-    I still need to make animations for walking up!!!
-        I need to expand the canvas again
+animation
+load json data files
+document all in wiki, keep updated
+    what about comments?
+game editor, mouse controlled w hotkeys? keep it updated with features of game
 make more objects, stuff she can walk behind, and stuff that animates
 make npcs with programmable actions/animations/paths
 transparencies
-load json data files
-game editor, mouse controlled w hotkeys? keep it updated with features of game
 make more images and make more game content with editor
-document all in wiki, where to put todo?
 interact with people and objects
-      switches and doors and stuff.
-      text and drawing primitives for word balloons and other menus
-      avatars in dialog boxes, timed printing out of dialog
+    switches and doors and stuff.
+    text and drawing primitives for word balloons and other menus
+    avatars in dialog boxes, timed printing out of dialog
 re-read homestuck for inspiration
 adventure game inventory
 armor, weapons, items, etc

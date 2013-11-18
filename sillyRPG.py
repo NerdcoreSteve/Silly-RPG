@@ -20,12 +20,27 @@ class Field_Object(object):
         return self.obstacle_rect.colliderect(field_object.obstacle_rect)
 
 class Animated_Field_Object(Field_Object):
-    def __init__(self, image_path, position_offset, obstacle_rect_points = 0):
+    def __init__(self, image_path, position_offset, obstacle_rect_points = 0, states):
         Field_Object.__init__(self, image_path, position_offset, obstacle_rect_points)
-        #self.states = a dictionary of dictionaries, the first level is the name of
-        #the second level is the paths to the image frames and their time delay
-        #there should be a change state function, and that's it for now,
-        #game while loop or player will handle changing state based on input
+        #"current state":<the current animated state name>
+        #<name of state>:"array":<an array of frame image paths in order>
+        #<name of state>:"dict":<keys are image paths from array, values are frame delay of that image>
+        self.states = states 
+        self.current_frame = 0
+        self.counter = 0
+    def change_state(self, state):
+        if state in self.states:
+            self.states["current state"] = state
+            self.counter = 0
+    def count_or_next_frame(self):
+        self.counter++
+        current_state = self.states["current state"]
+        delay = current_state["array"][self.current_frame]
+        if delay > self.counter:
+            self.current_frame++
+            if self.current_frame > len(current_state["array"]) - 1:
+                self.current_frame = 0
+            self.image_path = current_state["array"][self.current_frame]
 
 class Player(Animated_Field_Object):
     def __init__(self, image_path, screen):
