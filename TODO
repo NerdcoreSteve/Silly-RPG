@@ -1,7 +1,10 @@
+CURRENT GAME
 animation
+    fix this
     make metadata for flipping images
 change image_path to image
 load json data files
+each frame has its own collision rect
 document all in wiki, keep updated
     what about comments?
 game editor, mouse controlled w hotkeys? keep it updated with features of game
@@ -13,14 +16,35 @@ interact with people and objects
     switches and doors and stuff.
     text and drawing primitives for word balloons and other menus
     avatars in dialog boxes, timed printing out of dialog
-re-read homestuck for inspiration
+re-read all ms paint adventures for inspiration
+experience rewards: items that gain exp?
 adventure game inventory
 armor, weapons, items, etc
 find items in field, treasure chests, people
 money and shopping
 Battle engine: final fantasy? chrono trigger? earthbound?
 attack, pyshcic powers
+cut-scenes like chrono-trigger
 in field, reading minds, pyschic influence, telekinesis to move and retrieve things
+you see what you wear
+    editor allows you to super-impose images
+subset of monsters are pokemon pets?
+other subset of monsters are possible henchmen?
 replay or research kotor for inspiration
-experience rewards: items that gain exp?
-limit your feature set so you can finish this thing.
+replay or research diablo 2 for inspiration
+research diablo 3 for inspiration
+replay other rpgs you have for inspiration
+research other video game and table-top rpgs for more inspiration
+craft all items
+plot-story tree
+    can I learn and add game ai?
+dynamically generated content.
+finish whole game, make the content sing.
+    redraw pics, write good dialog, etc.
+make a good linux, windows, and mac installer.
+
+SEQUEL
+make isometric
+keep all features
+mounts and vehicles
+more skills, abilities, gear.
