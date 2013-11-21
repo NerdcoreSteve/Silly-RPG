@@ -2,7 +2,7 @@ import sys, pygame
 
 class Field_Object(object):
     def __init__(self, image_path, position_offset, obstacle_rect_points = 0):
-        self.image = pygame.image.load(image_path)
+        self.change_image(image_path)
         self.rect = self.image.get_rect()
         if obstacle_rect_points:
             self.obstacle_rect = pygame.Rect(obstacle_rect_points[0], obstacle_rect_points[1],
@@ -18,6 +18,9 @@ class Field_Object(object):
             self.obstacle_rect = self.obstacle_rect.move(position_offset)
     def collision_detected(self, field_object):
         return self.obstacle_rect.colliderect(field_object.obstacle_rect)
+    def change_image(self, image_path):
+        self.image = pygame.image.load(image_path)
+
 
 class Animated_Field_Object(Field_Object):
     def __init__(self, image_path, position_offset, states, obstacle_rect_points = 0):
@@ -28,15 +31,15 @@ class Animated_Field_Object(Field_Object):
         self.states = states 
         self.change_state(self.states["current state"])
     def change_state(self, state):
+        print "change state to " + state + "\n"
         if state in self.states:
             self.states["current state"] = state
             self.current_frame = 0
             self.counter = 0
-            print self.states
             if "array" in self.states[state]:
-                self.image_path = self.states[state]["array"][self.current_frame]
+                self.change_image(self.states[state]["array"][self.current_frame])
             else:
-                self.image_path = self.states[state]["static image"]
+                self.change_image(image_path = self.states[state]["static image"])
     def count_or_next_frame(self):
         self.counter += 1
         current_state = self.states["current state"]
@@ -46,43 +49,45 @@ class Animated_Field_Object(Field_Object):
             if self.current_frame > len(current_state["array"]) - 1:
                 self.current_frame = 0
             self.image_path = current_state["array"][self.current_frame]
+    def get_state(self):
+        return self.states["current state"]
 
 #TODO make metadata for flipping images
 class Player(Animated_Field_Object):
     def __init__(self, image_path, screen):
         states = {"current state":"standing south",
-                "standing north":{"static image":"player_back1.png"},
-                  "walking north":{"array":["player_back1.png",
-                                            "player_back2.png",
-                                            "player_back1.png",
-                                            "player_back2.png"],
-                                   "dict":{"player_back1.png":1,
-                                           "player_back2.png":1,
-                                           "player_back1.png":1,
-                                           "player_back2.png":1}},
-                  "standing south":{"static image":"player_front1.png"},
-                  "walking south":{"array":["player_front1.png",
-                                            "player_front2.png",
-                                            "player_front1.png",
-                                            "player_front2.png"],
-                                   "dict":{"player_front1.png":1,
-                                           "player_front2.png":1,
-                                           "player_front1.png":1,
-                                           "player_front2.png":1}},
-                  "standing east":{"static image":"player_side1.png"},
-                  "walking east":{"array":["player_side1.png",
-                                           "player_side2.png"],
-                                  "dict":{"player_side1.png":1,
-                                          "player_side2.png":1,
-                                          "player_side1.png":1,
-                                          "player_side2.png":1}},
-                  "standing west":{"static image":"player_side1.png"},
-                  "walking west":{"array":["player_side1.png",
-                                           "player_side2.png"],
-                                  "dict":{"player_side1.png":1,
-                                          "player_side2.png":1,
-                                          "player_side1.png":1,
-                                          "player_side2.png":1}}};
+                "standing north":{"static image":"assets/images/player/player_back1.png"},
+                  "walking north":{"array":["assets/images/player/player_back1.png",
+                                            "assets/images/player/player_back2.png",
+                                            "assets/images/player/player_back1.png",
+                                            "assets/images/player/player_back2.png"],
+                                   "dict":{"assets/images/player/player_back1.png":1,
+                                           "assets/images/player/player_back2.png":1,
+                                           "assets/images/player/player_back1.png":1,
+                                           "assets/images/player/player_back2.png":1}},
+                  "standing south":{"static image":"assets/images/player/player_front1.png"},
+                  "walking south":{"array":["assets/images/player/player_front1.png",
+                                            "assets/images/player/player_front2.png",
+                                            "assets/images/player/player_front1.png",
+                                            "assets/images/player/player_front2.png"],
+                                   "dict":{"assets/images/player/player_front1.png":1,
+                                           "assets/images/player/player_front2.png":1,
+                                           "assets/images/player/player_front1.png":1,
+                                           "assets/images/player/player_front2.png":1}},
+                  "standing east":{"static image":"assets/images/player/player_side1.png"},
+                  "walking east":{"array":["assets/images/player/player_side1.png",
+                                           "assets/images/player/player_side2.png"],
+                                  "dict":{"assets/images/player/player_side1.png":1,
+                                          "assets/images/player/player_side2.png":1,
+                                          "assets/images/player/player_side1.png":1,
+                                          "assets/images/player/player_side2.png":1}},
+                  "standing west":{"static image":"assets/images/player/player_side1.png"},
+                  "walking west":{"array":["assets/images/player/player_side1.png",
+                                           "assets/images/player/player_side2.png"],
+                                  "dict":{"assets/images/player/player_side1.png":1,
+                                          "assets/images/player/player_side2.png":1,
+                                          "assets/images/player/player_side1.png":1,
+                                          "assets/images/player/player_side2.png":1}}};
         Animated_Field_Object.__init__(self, image_path, [0, 0], states, [29, 75, 25, 15])
         screen_rect = screen.get_rect()
         self.rect.centerx = screen_rect.centerx
@@ -92,7 +97,6 @@ class Player(Animated_Field_Object):
         field.move(direction)
         if field.collision_detected(self):
             field.move([-1 * direction[0], -1 * direction[1]])
-        #change_animation_state("walk " + direction)
 
 class Field(object):
     def __init__(self):
@@ -140,13 +144,25 @@ while 1:
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
         player.move(right, field)
-        #player.move("right", field) #for animation
-    if keys[pygame.K_RIGHT]:
+        player.change_state("walking east")
+    elif keys[pygame.K_RIGHT]:
         player.move(left, field)
-    if keys[pygame.K_DOWN]:
+        player.change_state("walking west")
+    elif keys[pygame.K_DOWN]:
         player.move(up, field)
-    if keys[pygame.K_UP]:
+        player.change_state("walking south")
+    elif keys[pygame.K_UP]:
         player.move(down, field)
+        player.change_state("walking north")
+    else:
+        if(player.get_state() is "walking south"):
+            player.change_state("standing south")
+        elif(player.get_state() is "walking north"):
+            player.change_state("standing north")
+        elif(player.get_state() is "walking west"):
+            player.change_state("standing west")
+        elif(player.get_state() is "walking east"):
+            player.change_state("standing east")
 
     screen.fill(black)
     field.blit(screen)
