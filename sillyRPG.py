@@ -20,31 +20,70 @@ class Field_Object(object):
         return self.obstacle_rect.colliderect(field_object.obstacle_rect)
 
 class Animated_Field_Object(Field_Object):
-    def __init__(self, image_path, position_offset, obstacle_rect_points = 0, states):
+    def __init__(self, image_path, position_offset, states, obstacle_rect_points = 0):
         Field_Object.__init__(self, image_path, position_offset, obstacle_rect_points)
         #"current state":<the current animated state name>
         #<name of state>:"array":<an array of frame image paths in order>
         #<name of state>:"dict":<keys are image paths from array, values are frame delay of that image>
         self.states = states 
-        self.current_frame = 0
-        self.counter = 0
+        self.change_state(self.states["current state"])
     def change_state(self, state):
         if state in self.states:
             self.states["current state"] = state
+            self.current_frame = 0
             self.counter = 0
+            print self.states
+            if "array" in self.states[state]:
+                self.image_path = self.states[state]["array"][self.current_frame]
+            else:
+                self.image_path = self.states[state]["static image"]
     def count_or_next_frame(self):
-        self.counter++
+        self.counter += 1
         current_state = self.states["current state"]
-        delay = current_state["array"][self.current_frame]
+        delay = current_state["dict"][self.current_frame]
         if delay > self.counter:
-            self.current_frame++
+            self.current_frame += 1
             if self.current_frame > len(current_state["array"]) - 1:
                 self.current_frame = 0
             self.image_path = current_state["array"][self.current_frame]
 
+#TODO make metadata for flipping images
 class Player(Animated_Field_Object):
     def __init__(self, image_path, screen):
-        Animated_Field_Object.__init__(self, image_path, [0, 0], [29, 75, 25, 15])
+        states = {"current state":"standing south",
+                "standing north":{"static image":"player_back1.png"},
+                  "walking north":{"array":["player_back1.png",
+                                            "player_back2.png",
+                                            "player_back1.png",
+                                            "player_back2.png"],
+                                   "dict":{"player_back1.png":1,
+                                           "player_back2.png":1,
+                                           "player_back1.png":1,
+                                           "player_back2.png":1}},
+                  "standing south":{"static image":"player_front1.png"},
+                  "walking south":{"array":["player_front1.png",
+                                            "player_front2.png",
+                                            "player_front1.png",
+                                            "player_front2.png"],
+                                   "dict":{"player_front1.png":1,
+                                           "player_front2.png":1,
+                                           "player_front1.png":1,
+                                           "player_front2.png":1}},
+                  "standing east":{"static image":"player_side1.png"},
+                  "walking east":{"array":["player_side1.png",
+                                           "player_side2.png"],
+                                  "dict":{"player_side1.png":1,
+                                          "player_side2.png":1,
+                                          "player_side1.png":1,
+                                          "player_side2.png":1}},
+                  "standing west":{"static image":"player_side1.png"},
+                  "walking west":{"array":["player_side1.png",
+                                           "player_side2.png"],
+                                  "dict":{"player_side1.png":1,
+                                          "player_side2.png":1,
+                                          "player_side1.png":1,
+                                          "player_side2.png":1}}};
+        Animated_Field_Object.__init__(self, image_path, [0, 0], states, [29, 75, 25, 15])
         screen_rect = screen.get_rect()
         self.rect.centerx = screen_rect.centerx
         self.rect.centery = screen_rect.centery

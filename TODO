@@ -1,4 +1,6 @@
 animation
+    make metadata for flipping images
+change image_path to image
 load json data files
 document all in wiki, keep updated
     what about comments?
