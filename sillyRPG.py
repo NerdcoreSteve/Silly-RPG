@@ -31,7 +31,6 @@ class Animated_Field_Object(Field_Object):
         self.states = states 
         self.change_state(self.states["current state"])
     def change_state(self, state):
-        print "change state to " + state + "\n"
         if state in self.states:
             self.states["current state"] = state
             self.current_frame = 0
@@ -41,14 +40,15 @@ class Animated_Field_Object(Field_Object):
             else:
                 self.change_image(image_path = self.states[state]["static image"])
     def count_or_next_frame(self):
-        self.counter += 1
         current_state = self.states["current state"]
-        delay = current_state["dict"][self.current_frame]
-        if delay > self.counter:
-            self.current_frame += 1
-            if self.current_frame > len(current_state["array"]) - 1:
-                self.current_frame = 0
-            self.image_path = current_state["array"][self.current_frame]
+        if "dict" in current_state:
+            self.counter += 1
+            delay = current_state["dict"][self.current_frame]
+            if delay > self.counter:
+                self.current_frame += 1
+                if self.current_frame > len(current_state["array"]) - 1:
+                    self.current_frame = 0
+                self.change_image(current_state["array"][self.current_frame])
     def get_state(self):
         return self.states["current state"]
 
@@ -140,6 +140,8 @@ while 1:
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 sys.exit()
+
+    player.count_or_next_frame()
 
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
