@@ -40,7 +40,8 @@ class Animated_Field_Object(Field_Object):
             else:
                 self.change_image(image_path = self.states[state]["static image"])
     def count_or_next_frame(self):
-        current_state = self.states["current state"]
+        current_state = self.states[self.states["current state"]]
+        print current_state
         if "dict" in current_state:
             self.counter += 1
             delay = current_state["dict"][self.current_frame]
