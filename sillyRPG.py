@@ -31,7 +31,7 @@ class Animated_Field_Object(Field_Object):
         self.states = states 
         self.change_state(self.states["current state"])
     def change_state(self, state):
-        if state in self.states:
+        if state in self.states and self.states["current state"] is not state:
             self.states["current state"] = state
             self.current_frame = 0
             self.counter = 0
@@ -41,11 +41,15 @@ class Animated_Field_Object(Field_Object):
                 self.change_image(image_path = self.states[state]["static image"])
     def count_or_next_frame(self):
         current_state = self.states[self.states["current state"]]
-        print current_state
         if "dict" in current_state:
+            print "self.counter: ", self.counter
             self.counter += 1
-            delay = current_state["dict"][self.current_frame]
-            if delay > self.counter:
+            print "self.counter: ", self.counter
+            delay = current_state["dict"][current_state["array"][self.current_frame]]
+            print "delay: ", delay
+            print "self.counter: ", self.counter
+            if self.counter > delay:
+                self.counter = 0
                 self.current_frame += 1
                 if self.current_frame > len(current_state["array"]) - 1:
                     self.current_frame = 0
@@ -62,33 +66,33 @@ class Player(Animated_Field_Object):
                                             "assets/images/player/player_back2.png",
                                             "assets/images/player/player_back1.png",
                                             "assets/images/player/player_back2.png"],
-                                   "dict":{"assets/images/player/player_back1.png":1,
-                                           "assets/images/player/player_back2.png":1,
-                                           "assets/images/player/player_back1.png":1,
-                                           "assets/images/player/player_back2.png":1}},
+                                   "dict":{"assets/images/player/player_back1.png":10,
+                                           "assets/images/player/player_back2.png":10,
+                                           "assets/images/player/player_back1.png":10,
+                                           "assets/images/player/player_back2.png":10}},
                   "standing south":{"static image":"assets/images/player/player_front1.png"},
                   "walking south":{"array":["assets/images/player/player_front1.png",
                                             "assets/images/player/player_front2.png",
                                             "assets/images/player/player_front1.png",
                                             "assets/images/player/player_front2.png"],
-                                   "dict":{"assets/images/player/player_front1.png":1,
-                                           "assets/images/player/player_front2.png":1,
-                                           "assets/images/player/player_front1.png":1,
-                                           "assets/images/player/player_front2.png":1}},
+                                   "dict":{"assets/images/player/player_front1.png":10,
+                                           "assets/images/player/player_front2.png":10,
+                                           "assets/images/player/player_front1.png":10,
+                                           "assets/images/player/player_front2.png":10}},
                   "standing east":{"static image":"assets/images/player/player_side1.png"},
                   "walking east":{"array":["assets/images/player/player_side1.png",
                                            "assets/images/player/player_side2.png"],
-                                  "dict":{"assets/images/player/player_side1.png":1,
-                                          "assets/images/player/player_side2.png":1,
-                                          "assets/images/player/player_side1.png":1,
-                                          "assets/images/player/player_side2.png":1}},
+                                  "dict":{"assets/images/player/player_side1.png":10,
+                                          "assets/images/player/player_side2.png":10,
+                                          "assets/images/player/player_side1.png":10,
+                                          "assets/images/player/player_side2.png":10}},
                   "standing west":{"static image":"assets/images/player/player_side1.png"},
                   "walking west":{"array":["assets/images/player/player_side1.png",
                                            "assets/images/player/player_side2.png"],
-                                  "dict":{"assets/images/player/player_side1.png":1,
-                                          "assets/images/player/player_side2.png":1,
-                                          "assets/images/player/player_side1.png":1,
-                                          "assets/images/player/player_side2.png":1}}};
+                                  "dict":{"assets/images/player/player_side1.png":10,
+                                          "assets/images/player/player_side2.png":10,
+                                          "assets/images/player/player_side1.png":10,
+                                          "assets/images/player/player_side2.png":10}}};
         Animated_Field_Object.__init__(self, image_path, [0, 0], states, [29, 75, 25, 15])
         screen_rect = screen.get_rect()
         self.rect.centerx = screen_rect.centerx
