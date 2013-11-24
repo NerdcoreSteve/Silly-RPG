@@ -1,8 +1,8 @@
-import sys, pygame
+import sys, pygame, re
 
 class Field_Object(object):
     def __init__(self, image_path, position_offset, obstacle_rect_points = 0):
-        self.change_image(image_path)
+        self.set_image(image_path)
         self.rect = self.image.get_rect()
         if obstacle_rect_points:
             self.obstacle_rect = pygame.Rect(obstacle_rect_points[0], obstacle_rect_points[1],
@@ -18,8 +18,13 @@ class Field_Object(object):
             self.obstacle_rect = self.obstacle_rect.move(position_offset)
     def collision_detected(self, field_object):
         return self.obstacle_rect.colliderect(field_object.obstacle_rect)
-    def change_image(self, image_path):
-        self.image = pygame.image.load(image_path)
+    def set_image(self, image_path):
+        match_groups = re.match(r'^flip (.*)', image_path)
+        if match_groups:
+            self.image = pygame.image.load(match_groups.group(1))
+            self.image = pygame.transform.flip(self.image, True, False)
+        else:
+            self.image = pygame.image.load(image_path)
 
 
 class Animated_Field_Object(Field_Object):
@@ -36,24 +41,20 @@ class Animated_Field_Object(Field_Object):
             self.current_frame = 0
             self.counter = 0
             if "array" in self.states[state]:
-                self.change_image(self.states[state]["array"][self.current_frame])
+                self.set_image(self.states[state]["array"][self.current_frame])
             else:
-                self.change_image(image_path = self.states[state]["static image"])
+                self.set_image(image_path = self.states[state]["static image"])
     def count_or_next_frame(self):
         current_state = self.states[self.states["current state"]]
         if "dict" in current_state:
-            print "self.counter: ", self.counter
             self.counter += 1
-            print "self.counter: ", self.counter
             delay = current_state["dict"][current_state["array"][self.current_frame]]
-            print "delay: ", delay
-            print "self.counter: ", self.counter
             if self.counter > delay:
                 self.counter = 0
                 self.current_frame += 1
                 if self.current_frame > len(current_state["array"]) - 1:
                     self.current_frame = 0
-                self.change_image(current_state["array"][self.current_frame])
+                self.set_image(current_state["array"][self.current_frame])
     def get_state(self):
         return self.states["current state"]
 
@@ -65,28 +66,28 @@ class Player(Animated_Field_Object):
                   "walking north":{"array":["assets/images/player/player_back1.png",
                                             "assets/images/player/player_back2.png",
                                             "assets/images/player/player_back1.png",
-                                            "assets/images/player/player_back2.png"],
+                                            "flip assets/images/player/player_back2.png"],
                                    "dict":{"assets/images/player/player_back1.png":10,
                                            "assets/images/player/player_back2.png":10,
                                            "assets/images/player/player_back1.png":10,
-                                           "assets/images/player/player_back2.png":10}},
+                                           "flip assets/images/player/player_back2.png":10}},
                   "standing south":{"static image":"assets/images/player/player_front1.png"},
                   "walking south":{"array":["assets/images/player/player_front1.png",
                                             "assets/images/player/player_front2.png",
                                             "assets/images/player/player_front1.png",
-                                            "assets/images/player/player_front2.png"],
+                                            "flip assets/images/player/player_front2.png"],
                                    "dict":{"assets/images/player/player_front1.png":10,
                                            "assets/images/player/player_front2.png":10,
                                            "assets/images/player/player_front1.png":10,
-                                           "assets/images/player/player_front2.png":10}},
-                  "standing east":{"static image":"assets/images/player/player_side1.png"},
-                  "walking east":{"array":["assets/images/player/player_side1.png",
-                                           "assets/images/player/player_side2.png"],
-                                  "dict":{"assets/images/player/player_side1.png":10,
-                                          "assets/images/player/player_side2.png":10,
-                                          "assets/images/player/player_side1.png":10,
-                                          "assets/images/player/player_side2.png":10}},
-                  "standing west":{"static image":"assets/images/player/player_side1.png"},
+                                           "flip assets/images/player/player_front2.png":10}},
+                  "standing east":{"static image":"flip assets/images/player/player_side1.png"},
+                  "walking east":{"array":["flip assets/images/player/player_side1.png",
+                                           "flip assets/images/player/player_side2.png"],
+                                  "dict":{"flip assets/images/player/player_side1.png":10,
+                                          "flip assets/images/player/player_side2.png":10,
+                                          "flip assets/images/player/player_side1.png":10,
+                                          "flip assets/images/player/player_side2.png":10}},
+                  "standing west":{"static image":"flip assets/images/player/player_side1.png"},
                   "walking west":{"array":["assets/images/player/player_side1.png",
                                            "assets/images/player/player_side2.png"],
                                   "dict":{"assets/images/player/player_side1.png":10,
