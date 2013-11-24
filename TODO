@@ -1,8 +1,4 @@
 CURRENT GAME
-animation
-    fix this
-    make metadata for flipping images
-change image_path to image
 load json data files
 each frame has its own collision rect
 document all in wiki, keep updated

@@ -1,4 +1,4 @@
-import sys, pygame, re
+import sys, pygame, re, json
 
 class Field_Object(object):
     def __init__(self, image_path, position_offset, obstacle_rect_points = 0):
@@ -58,7 +58,6 @@ class Animated_Field_Object(Field_Object):
     def get_state(self):
         return self.states["current state"]
 
-#TODO make metadata for flipping images
 class Player(Animated_Field_Object):
     def __init__(self, image_path, screen):
         states = {"current state":"standing south",
@@ -137,6 +136,9 @@ field = Field()
 
 frame_rate = 60
 clock = pygame.time.Clock()
+
+#f = open('sillyRPG.json', 'r')
+#print json.loads(f.read())
 
 while 1:
     clock.tick(frame_rate)
