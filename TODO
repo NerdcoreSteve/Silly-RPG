@@ -1,19 +1,39 @@
 CURRENT GAME
-load json data files
+change json to a more sensible format:
+and to include all game data, not just player's
+actually you should write it all out here before changing the real json
+"states":{
+"walking north":{"path to frames":"assets/images/player/",
+                 "frames":{1:{"image":"player_back1.png",
+                              "delay":10},
+                           2:{"image":"player_back2.png",
+                              "delay":10},
+                           3:{"image":"player_back1.png",
+                              "delay":10},
+                           4:{"image":"player_back2.png",
+                              "delay":10,
+                              "transform":"flip"}}},}
+make new json file and gradually adapt to using new json, then get rid of old json file
+make sure this file format looks good and makes sense.
 each frame has its own collision rect
+    what do you do when a change in rect makes an overlap happen? a slow move outward from each
+        of the rect's centers.
+try to make the python code as general as possible, fit as much as you can into the json, try to make it very customizeable.
+
 document all in wiki, keep updated
-    what about comments?
+    what about code comments? (look up conventions)
 game editor, mouse controlled w hotkeys? keep it updated with features of game
 make more objects, stuff she can walk behind, and stuff that animates
 make npcs with programmable actions/animations/paths
 transparencies
+    "transform":"tranluscent" (see through)
 make more images and make more game content with editor
 interact with people and objects
     switches and doors and stuff.
     text and drawing primitives for word balloons and other menus
     avatars in dialog boxes, timed printing out of dialog
 re-read all ms paint adventures for inspiration
-experience rewards: items that gain exp?
+experience rewards: items that gain exp like in ratchet and clank?
 adventure game inventory
 armor, weapons, items, etc
 find items in field, treasure chests, people

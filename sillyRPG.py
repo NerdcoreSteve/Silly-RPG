@@ -30,10 +30,11 @@ class Field_Object(object):
 class Animated_Field_Object(Field_Object):
     def __init__(self, image_path, position_offset, states, obstacle_rect_points = 0):
         Field_Object.__init__(self, image_path, position_offset, obstacle_rect_points)
+        #states is a data structure with the following format:
         #"current state":<the current animated state name>
         #<name of state>:"array":<an array of frame image paths in order>
         #<name of state>:"dict":<keys are image paths from array, values are frame delay of that image>
-        self.states = states 
+        self.states = states
         self.change_state(self.states["current state"])
     def change_state(self, state):
         if state in self.states and self.states["current state"] is not state:
@@ -59,41 +60,8 @@ class Animated_Field_Object(Field_Object):
         return self.states["current state"]
 
 class Player(Animated_Field_Object):
-    def __init__(self, image_path, screen):
-        states = {"current state":"standing south",
-                "standing north":{"static image":"assets/images/player/player_back1.png"},
-                  "walking north":{"array":["assets/images/player/player_back1.png",
-                                            "assets/images/player/player_back2.png",
-                                            "assets/images/player/player_back1.png",
-                                            "flip assets/images/player/player_back2.png"],
-                                   "dict":{"assets/images/player/player_back1.png":10,
-                                           "assets/images/player/player_back2.png":10,
-                                           "assets/images/player/player_back1.png":10,
-                                           "flip assets/images/player/player_back2.png":10}},
-                  "standing south":{"static image":"assets/images/player/player_front1.png"},
-                  "walking south":{"array":["assets/images/player/player_front1.png",
-                                            "assets/images/player/player_front2.png",
-                                            "assets/images/player/player_front1.png",
-                                            "flip assets/images/player/player_front2.png"],
-                                   "dict":{"assets/images/player/player_front1.png":10,
-                                           "assets/images/player/player_front2.png":10,
-                                           "assets/images/player/player_front1.png":10,
-                                           "flip assets/images/player/player_front2.png":10}},
-                  "standing east":{"static image":"flip assets/images/player/player_side1.png"},
-                  "walking east":{"array":["flip assets/images/player/player_side1.png",
-                                           "flip assets/images/player/player_side2.png"],
-                                  "dict":{"flip assets/images/player/player_side1.png":10,
-                                          "flip assets/images/player/player_side2.png":10,
-                                          "flip assets/images/player/player_side1.png":10,
-                                          "flip assets/images/player/player_side2.png":10}},
-                  "standing west":{"static image":"assets/images/player/player_side1.png"},
-                  "walking west":{"array":["assets/images/player/player_side1.png",
-                                           "assets/images/player/player_side2.png"],
-                                  "dict":{"assets/images/player/player_side1.png":10,
-                                          "assets/images/player/player_side2.png":10,
-                                          "assets/images/player/player_side1.png":10,
-                                          "assets/images/player/player_side2.png":10}}};
-        Animated_Field_Object.__init__(self, image_path, [0, 0], states, [29, 75, 25, 15])
+    def __init__(self, image_path, screen, game_data):
+        Animated_Field_Object.__init__(self, image_path, [0, 0], game_data, [29, 75, 25, 15])
         screen_rect = screen.get_rect()
         self.rect.centerx = screen_rect.centerx
         self.rect.centery = screen_rect.centery
@@ -120,6 +88,8 @@ class Field(object):
         for field_object in self.field_objects:
             field_object.blit(screen)
 
+game_data = json.loads(open('sillyRPG.json', 'r').read())
+
 speed = 3
 right = [speed, 0]
 left = [-1 * speed, 0]
@@ -131,14 +101,11 @@ screen_size = width, height = 800, 600
 screen = pygame.display.set_mode(screen_size)
 black = 0, 0, 0
 
-player = Player("assets/images/player/player_front1.png", screen)
+player = Player("assets/images/player/player_front1.png", screen, game_data)
 field = Field()
 
 frame_rate = 60
 clock = pygame.time.Clock()
-
-#f = open('sillyRPG.json', 'r')
-#print json.loads(f.read())
 
 while 1:
     clock.tick(frame_rate)
