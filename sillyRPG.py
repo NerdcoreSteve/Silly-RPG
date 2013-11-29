@@ -86,7 +86,7 @@ class Player(Animated_Field_Object):
                                           "flip assets/images/player/player_side2.png":10,
                                           "flip assets/images/player/player_side1.png":10,
                                           "flip assets/images/player/player_side2.png":10}},
-                  "standing west":{"static image":"flip assets/images/player/player_side1.png"},
+                  "standing west":{"static image":"assets/images/player/player_side1.png"},
                   "walking west":{"array":["assets/images/player/player_side1.png",
                                            "assets/images/player/player_side2.png"],
                                   "dict":{"assets/images/player/player_side1.png":10,
