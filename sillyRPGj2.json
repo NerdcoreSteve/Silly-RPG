@@ -1,0 +1,50 @@
+{
+    "player":{
+        "current animation state":"standing south",
+        "animation states":{
+            "standing south":{
+                "static image":"assets/images/player/player_front1.png"
+                "collision rectangle":[29, 75, 25, 15]
+            },
+            "walking south":{
+                "frames directory":"assets/images/player/",
+                "frames":{
+                    1:{
+                        "image":"player_front1.png",
+                        "collision rectangle":[29, 75, 25, 15],
+                        "delay":10
+                    },
+                    2:{
+                        "image":"player_front2.png",
+                        "collision rectangle":[29, 75, 25, 15],
+                        "delay":10
+                    },
+                    3:{
+                        "image":"player_front1.png",
+                        "collision rectangle":[29, 75, 25, 15],
+                        "delay":10
+                    },
+                    4:{
+                        "image":"player_front2.png",
+                        "delay":10,
+                        "collision rectangle":[29, 75, 25, 15],
+                        "transform":"flip"
+                    }
+                }
+            },
+        }
+    },
+    "field":{
+        "objects":[
+            1:{
+                "image":"assets/images/grass.png",
+                "position":[0,0],
+                "collision rectangle":[0, 0, 218, 145]
+            }
+            2:{
+                "image":"assets/images/sidewalk.png",
+                "position":[218,145]
+            }
+        ]
+    }
+}

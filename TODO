@@ -1,18 +1,13 @@
+BUCKET
+I should be able to make the player character exactly like npcs, only you control them and the camera should be connected to the player. I need to connect the camera to the player, when the player is walking in the field, then when there is a cut scene, I simply take complete control of the camera
+player should have their own current position just like an npc
+
+The editor should allow you to easily direct your own cutscenes.
+
 CURRENT GAME
 change json to a more sensible format:
 and to include all game data, not just player's
 actually you should write it all out here before changing the real json
-"states":{
-"walking north":{"path to frames":"assets/images/player/",
-                 "frames":{1:{"image":"player_back1.png",
-                              "delay":10},
-                           2:{"image":"player_back2.png",
-                              "delay":10},
-                           3:{"image":"player_back1.png",
-                              "delay":10},
-                           4:{"image":"player_back2.png",
-                              "delay":10,
-                              "transform":"flip"}}},}
 make new json file and gradually adapt to using new json, then get rid of old json file
 make sure this file format looks good and makes sense.
 each frame has its own collision rect
@@ -20,11 +15,27 @@ each frame has its own collision rect
         of the rect's centers.
 try to make the python code as general as possible, fit as much as you can into the json, try to make it very customizeable.
 
+split json files, player, field, maybe others?
+
+make two field json's, the game should be able to load both and stitch them together.
+
 document all in wiki, keep updated
     what about code comments? (look up conventions)
+
 game editor, mouse controlled w hotkeys? keep it updated with features of game
-make more objects, stuff she can walk behind, and stuff that animates
+    strip json of all un-needed spaces and \n's
+
+make more objects, stuff she can walk behind, and stuff that animates, stuff that she can interact
+with, open, break, etc.
+
+can I have a kind of game object that has, not only coll rects, but interact rects? Like a space ship that you can go to the door of, and then and only then the door will open if you hit space or something?
+
+keyboard mappings should be configurable, don't hit things with space, hit them with "activate", shoudl the number of buttons you can use be configurable?
+
 make npcs with programmable actions/animations/paths
+    a set of instructions that is basically animated object state changes and movements
+    should there be some kind of lookup table that indicates where all npc's are in the game?
+
 transparencies
     "transform":"tranluscent" (see through)
 make more images and make more game content with editor
