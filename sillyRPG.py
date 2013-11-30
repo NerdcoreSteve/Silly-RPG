@@ -28,14 +28,15 @@ class Field_Object(object):
 
 
 class Animated_Field_Object(Field_Object):
-    def __init__(self, image_path, position_offset, states, obstacle_rect_points = 0):
+    def __init__(self, image_path, position_offset, states, states2, obstacle_rect_points = 0):
         Field_Object.__init__(self, image_path, position_offset, obstacle_rect_points)
         #states is a data structure with the following format:
         #"current state":<the current animated state name>
         #<name of state>:"array":<an array of frame image paths in order>
         #<name of state>:"dict":<keys are image paths from array, values are frame delay of that image>
         self.states = states
-        self.change_state(self.states["current state"])
+        self.states2 = states2
+        self.change_state(self.states2["player"]["current animation state"])
     def change_state(self, state):
         if state in self.states and self.states["current state"] is not state:
             self.states["current state"] = state
@@ -60,8 +61,8 @@ class Animated_Field_Object(Field_Object):
         return self.states["current state"]
 
 class Player(Animated_Field_Object):
-    def __init__(self, image_path, screen, game_data):
-        Animated_Field_Object.__init__(self, image_path, [0, 0], game_data, [29, 75, 25, 15])
+    def __init__(self, image_path, screen, game_data, game_data2):
+        Animated_Field_Object.__init__(self, image_path, [0, 0], game_data, game_data2, [29, 75, 25, 15])
         screen_rect = screen.get_rect()
         self.rect.centerx = screen_rect.centerx
         self.rect.centery = screen_rect.centery
@@ -89,6 +90,7 @@ class Field(object):
             field_object.blit(screen)
 
 game_data = json.loads(open('sillyRPG.json', 'r').read())
+game_data2 = json.loads(open('sillyRPGj2.json', 'r').read())
 
 speed = 3
 right = [speed, 0]
@@ -101,7 +103,7 @@ screen_size = width, height = 800, 600
 screen = pygame.display.set_mode(screen_size)
 black = 0, 0, 0
 
-player = Player("assets/images/player/player_front1.png", screen, game_data)
+player = Player("assets/images/player/player_front1.png", screen, game_data, game_data2)
 field = Field()
 
 frame_rate = 60
