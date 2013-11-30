@@ -116,6 +116,8 @@ while 1:
 
     player.count_or_next_frame()
 
+    #can I put how states transition in the json? maybe lock them to keys?
+    #put them as actual keys for now but perhaps as intermediary map ids later?
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
         player.move(right, field)
