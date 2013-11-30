@@ -30,10 +30,6 @@ class Field_Object(object):
 class Animated_Field_Object(Field_Object):
     def __init__(self, image_path, position_offset, states, states2, obstacle_rect_points = 0):
         Field_Object.__init__(self, image_path, position_offset, obstacle_rect_points)
-        #states is a data structure with the following format:
-        #"current state":<the current animated state name>
-        #<name of state>:"array":<an array of frame image paths in order>
-        #<name of state>:"dict":<keys are image paths from array, values are frame delay of that image>
         self.states = states
         self.states2 = states2
         self.change_state(self.states2["player"]["current animation state"])
