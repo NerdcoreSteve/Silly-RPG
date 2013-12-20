@@ -1,4 +1,6 @@
-import sys, pygame, re, json
+import sys, pygame, re, json, pprint
+
+#TODO need to figure out why player isn't reading json right
 
 class Field_Object(object):
     def __init__(self, image_path, position_offset, obstacle_rect_points = 0):
@@ -57,7 +59,10 @@ class Animated_Field_Object(Field_Object):
         return self.states["current state"]
 
 class Player(Animated_Field_Object):
-    def __init__(self, image_path, screen, game_data, game_data2):
+    def __init__(self, screen, game_data, player_data):
+        pp = pprint.PrettyPrinter(indent=4)
+        pp.pprint(player_data["current animation state"])
+        image_path = player_data["animation states"][player_data["current animation state"]]["static image"];
         Animated_Field_Object.__init__(self, image_path, [0, 0], game_data, game_data2, [29, 75, 25, 15])
         screen_rect = screen.get_rect()
         self.rect.centerx = screen_rect.centerx
@@ -99,7 +104,7 @@ screen_size = width, height = 800, 600
 screen = pygame.display.set_mode(screen_size)
 black = 0, 0, 0
 
-player = Player("assets/images/player/player_front1.png", screen, game_data, game_data2)
+player = Player(screen, game_data, game_data2["player"])
 field = Field()
 
 frame_rate = 60
