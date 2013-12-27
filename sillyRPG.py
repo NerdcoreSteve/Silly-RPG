@@ -1,6 +1,4 @@
-import sys, pygame, re, json, pprint
-
-#TODO need to figure out why player isn't reading json right
+import sys, pygame, re, json
 
 class Field_Object(object):
     def __init__(self, image_path, position_offset, obstacle_rect_points = 0):
@@ -28,22 +26,31 @@ class Field_Object(object):
         else:
             self.image = pygame.image.load(image_path)
 
-
 class Animated_Field_Object(Field_Object):
-    def __init__(self, image_path, position_offset, states, states2, obstacle_rect_points = 0):
-        Field_Object.__init__(self, image_path, position_offset, obstacle_rect_points)
+    def __init__(self, position_offset, states, state_data):
+        if "collision rectangle" in state_data:
+            obstacle_rect_points = state_data["collision rectangle"]
+        else:
+            obstacle_rect_points = 0
+        Field_Object.__init__(self, 
+            state_data["animation states"][state_data["current animation state"]]["static image"],
+            position_offset,
+            obstacle_rect_points)
         self.states = states
-        self.states2 = states2
-        self.change_state(self.states2["player"]["current animation state"])
-    def change_state(self, state):
-        if state in self.states and self.states["current state"] is not state:
-            self.states["current state"] = state
+        self.state_data = state_data
+        self.change_state(state_data["current animation state"])
+    def change_state(self, animation_state):
+        if animation_state in self.state_data["animation states"] and self.state_data["current animation state"] is not animation_state:
+            self.state_data["current animation state"] = animation_state
+            animation_states = self.state_data["animation states"]
             self.current_frame = 0
             self.counter = 0
-            if "array" in self.states[state]:
-                self.set_image(self.states[state]["array"][self.current_frame])
+            if "frames" in animation_states[animation_state]:
+                frames_directory = animation_states[animation_state]["frames directory"]
+                image = animation_states[animation_state]["frames"]["1"]["image"]
+                self.set_image(frames_directory + image)
             else:
-                self.set_image(image_path = self.states[state]["static image"])
+                self.set_image(animation_states[animation_state]["static image"])
     def count_or_next_frame(self):
         current_state = self.states[self.states["current state"]]
         if "dict" in current_state:
@@ -60,10 +67,7 @@ class Animated_Field_Object(Field_Object):
 
 class Player(Animated_Field_Object):
     def __init__(self, screen, game_data, player_data):
-        pp = pprint.PrettyPrinter(indent=4)
-        pp.pprint(player_data["current animation state"])
-        image_path = player_data["animation states"][player_data["current animation state"]]["static image"];
-        Animated_Field_Object.__init__(self, image_path, [0, 0], game_data, game_data2, [29, 75, 25, 15])
+        Animated_Field_Object.__init__(self, [0, 0], game_data, player_data)
         screen_rect = screen.get_rect()
         self.rect.centerx = screen_rect.centerx
         self.rect.centery = screen_rect.centery

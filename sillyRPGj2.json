@@ -7,7 +7,7 @@
             "walking north":{
                 "frames directory":"assets/images/player/",
                 "frames":{
-                    "1":{"image":"player_back2.png", "delay":10},
+                    "1":{"image":"player_back1.png", "delay":10},
                     "2":{"image":"player_back2.png", "delay":10, "transform":"flip"}
                 }
             },
@@ -15,7 +15,7 @@
             "walking south":{
                 "frames directory":"assets/images/player/",
                 "frames":{
-                    "1":{"image":"player_front2.png", "delay":10},
+                    "1":{"image":"player_front1.png", "delay":10},
                     "2":{"image":"player_front2.png", "delay":10, "transform":"flip"}
                 }
             },
