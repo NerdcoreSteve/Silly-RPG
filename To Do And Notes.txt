@@ -4,6 +4,8 @@ player should have their own current position just like an npc
 
 The editor should allow you to easily direct your own cutscenes.
 
+What about licenses for the images and game-content? Should we do a creative commons attribution?
+
 CURRENT GAME
 change json to a more sensible format:
 and to include all game data, not just player's

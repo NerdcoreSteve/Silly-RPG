@@ -1,3 +1,25 @@
+--STORY SCRIPT--
+[note: anything in brackets are used for author commentary]
+Synopsis:
+The player-character/hero (Aniyah Booker or whatever the player names her) and her neighborhood, is scooped up and transported to an unfamiliar solar system, in which there is an entire field of scooped-up pieces of worlds. [hmmmm... perhaps that's too many?] Creatures/aliens from another world-piece come to attack her neighborhood. The adults tell their children to hide while they go fight the invaders. They are captured and the neighborhood is wrecked. Some children are captured too but our hero and her sister (along with some others she discovers later) are able to hide.
+
+The leader of the invasion (a skeleton looking guy in an outfit that is part motorcycle-ruffian, part evil wizard/knight, and part pirate) takes her parents back to his world. [I had the idea that the parents and others would later be scattered to a bunch of the other worlds, maybe one or two adults and a few kids could be rescued) thus motivating our characters to go out and explore the world-pieces. Perhaps this is the last act of a defeated villain "I have one last bit of magic to use!!" and then he scatters them all.]
+
+Aniyah discovers two creatures fighting over a trinket that they stole from the leader. She finds this out because the two mention it while arguing. Aniyah takes them out and then takes the device for herself, which gives her psychic powers (telepathy, telekinesis, mind-reading, far-seeing, the equivalent to force-persuasion, the whole deal) [should we make in-game consequences to unethical use of mind-reading? hmm...] [eventually all her friends should get special gadgets, have hidden or new powers, get pets, super-ninja training, something.] Aniyah uses her psychic powers to find the other kids. Her sister starts learning about all this alien technology. Another kid starts learning about magic [they'll be our magic user in a later game]. The kids discover stuff about their enemy, fight monsters, etc. We give the impression that the others are tagging along by making them npc's, but for now Aniyah fights alone [because the game engine won't support multiple player characters :) ]
+
+Eventually there is a final battle with the bad guy, who scatters their parents and friends all over the world-pieces. The kids decide to search for them. They also free a "pet" kept captive and abused by the bad guy, whose powers were used by the bad guy without its consent to attack people from other world-pieces, and who has been helping them in subtle ways all along the adventure. The kids take a ship from the lair of the bad guy, his minions now gone (scattered away in fear) and go off on adventures. The End. [at least for this first game.]
+
+We begin the story before her neighborhood has been taken. 
+
+
+
+
+
+
+
+
+OLD NOTES
+
 Main Character: Aniyah Booker
 Like Lina Inverse as a little kid. Cockey. She's the leader of a small group of misfit friends but most people think her and her group are weird.
 
