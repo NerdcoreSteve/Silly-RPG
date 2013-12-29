@@ -14,21 +14,49 @@ We begin the story before her neighborhood has been taken.
 Game Play Screen Play:
 Credits fade in one at a time. "Made by [insert name of game dev group here, Rabid Weasels? Robo-Potato?]", "using the Silly RPG game engine" etc. We then cue the title screen. [What's a good title? World Piece?] We then fade to Suburbia, [this is the actual name of the city, the city of Suburbia, maybe the title over the shots of people walking around in the neighborhood, the gas station/convienience-store says "The City of Suburbia" fade out, then fade to "The night it happened".
 
-We move to a cut-scene with Aniyah. We see her using a stick as if it were a sword. [Just to be clear this is now an in-game cutscene, we see the little avatar move around, animated with a little sword. Her dialog is shown in the same dialog window you would see if she were talking with an npc.] She's in a local park. She should be looking after her sister but has lost track of her.
+We move to a cut-scene with Aniyah. We see her using a stick as if it were a sword. [Just to be clear this is now an in-game cutscene, we see the little avatar move around, animated with a little sword. Her dialog is shown in the same dialog window you would see if she were talking with an npc.] She's in an enclosure of trees at a local park, playing pretend. She should be looking after her sister but has lost track of her.
 
-Aniyah: (holding her sword toward an imaginary foe) "I don't know who you think you're messing with Ultra-Saur, but you'd better let go of the prince before I get mad." (She then moves over to the spot where ultra saur was supposed to be and laughs. "Ha Ha Ha, Don't make me laugh Aniyah Star-Basher! you are no match for me and my army of Space-Droids!" [she hears her sister yell for help, you take control, talking to npc kids along the way, then you talk with the bullies and have a fight with them, thus showing the battle engine.]
+Aniyah: (holding her sword toward an imaginary foe) "I don't know who you think you're messing with Ultra-Saur, but you'd better let go of the prince before I get mad." (She then moves over to the spot where ultra saur was supposed to be and laughs. "Ha Ha Ha, Don't make me laugh Aniyah Star-Basher! you are no match for me and my army of Space-Droids!" She moves to the other side, now the hero again, and says "You asked for it dino-doof, TAKE THIS!" more sword-waving "AND THAT!!---"
+
+suddenly Aniyah's fun is interrupted by "ANIYAH!!! HELP!!!" Aniyah turns in the direction of her sister and then starts running. "Huh? Lil' Sis?" she runs off-screen [perhaps walks fast if I don't want to draw extra animation frames] and then we come to a windy walk-way that goes from left to right. The player as the option to talk with the npc kids that are on the parkway and the one's that are in the grass, on the park merry-go-rount, etc. They're either talking about their own stuff or they are saying they just heard a kid yell, "Isn't that your sister Aniyah?" maybe some of the kids that will later accompany her on her adventures are first seen here.
+
+Finally we come to a spot where two bullys are playing keep-away with Bonnie's computer. [Bonnie is the name of Aniyah's sister.]
+
+Bully1: "Got yer computer nerd! What are ya gonna do about it!" (he's holding the computer above his head. (or maybe the computer is just put in front of the the bully npc and we pretend that it looks like their holding it. :) )
+
+Bully2: [I think maybe showing their names as Bully1 and Bully2 is kinda cool. The kids probably have to rescue them from evil creatures later on?] "Hey we could probably install Space-Nazi's from Mars on that thing!"
+
+Bully1: "I didn't know you'd bought that."
+
+Bully2: "Who said anything about buying it?" [yuk yuk :P ]
+
+Bonnie: "Give it back! Aniyah, help me!"
+
+[The following is an attempt at a dialog tree. I *think* this is valid json.]
+
+{"dialog-tree":{"choices":{
+    "Theives! Return my sister's computational device to her!":{}
+    "Whatevs. Guess you don't have a computer now sis."}                  
+               }
+}
+
+[she hears her sister yell for help, you take control, talking to npc kids along the way, then you talk with the bullies and have a fight with them, thus showing the battle engine.]
+
+[at some point I would like a suburband street from left to right with the neighbors outside and on the street, maybe after the fight scene.]
 
 
 
 
 
-
-OLD NOTES
+NOTES
 
 Main Character: Aniyah Booker
 Like Lina Inverse as a little kid. Cockey. She's the leader of a small group of misfit friends but most people think her and her group are weird.
 
 Aniyah and her friends live in the same neighborhood, which is scooped out of its city and placed among other scoops from other worlds, fantasy, sci fi, whatever you want.
+
+Bonnie Booker: Aniyah's little genius sister.
+
 
 Do a short first episode where Aniyah fights a villan that keeps a marvelous creature (digimon) as a pet, saves the creature, and becomes friends with it. Her other friends are having adventures too but they're not yet playable characters
 
