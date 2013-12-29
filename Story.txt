@@ -11,7 +11,12 @@ Eventually there is a final battle with the bad guy, who scatters their parents 
 
 We begin the story before her neighborhood has been taken. 
 
+Game Play Screen Play:
+Credits fade in one at a time. "Made by [insert name of game dev group here, Rabid Weasels? Robo-Potato?]", "using the Silly RPG game engine" etc. We then cue the title screen. [What's a good title? World Piece?] We then fade to Suburbia, [this is the actual name of the city, the city of Suburbia, maybe the title over the shots of people walking around in the neighborhood, the gas station/convienience-store says "The City of Suburbia" fade out, then fade to "The night it happened".
 
+We move to a cut-scene with Aniyah. We see her using a stick as if it were a sword. [Just to be clear this is now an in-game cutscene, we see the little avatar move around, animated with a little sword. Her dialog is shown in the same dialog window you would see if she were talking with an npc.] She's in a local park. She should be looking after her sister but has lost track of her.
+
+Aniyah: (holding her sword toward an imaginary foe) "I don't know who you think you're messing with Ultra-Saur, but you'd better let go of the prince before I get mad." (She then moves over to the spot where ultra saur was supposed to be and laughs. "Ha Ha Ha, Don't make me laugh Aniyah Star-Basher! you are no match for me and my army of Space-Droids!" [she hears her sister yell for help, you take control, talking to npc kids along the way, then you talk with the bullies and have a fight with them, thus showing the battle engine.]
 
 
 
