@@ -33,37 +33,43 @@ class Animated_Field_Object(Field_Object):
         else:
             obstacle_rect_points = 0
         Field_Object.__init__(self, 
-            state_data["animation states"][state_data["current animation state"]]["static image"],
+            state_data["animation states"][state_data["current animation state"]]["image"],
             position_offset,
             obstacle_rect_points)
         self.states = states
         self.state_data = state_data
         self.change_state(state_data["current animation state"])
     def change_state(self, animation_state):
-        if animation_state in self.state_data["animation states"] and self.state_data["current animation state"] is not animation_state:
+        if animation_state in self.state_data["animation states"] and \
+           self.state_data["current animation state"] is not animation_state:
             self.state_data["current animation state"] = animation_state
-            animation_states = self.state_data["animation states"]
+            current_state = self.get_state_data()
             self.current_frame = 0
             self.counter = 0
-            if "frames" in animation_states[animation_state]:
-                frames_directory = animation_states[animation_state]["frames directory"]
-                image = animation_states[animation_state]["frames"]["1"]["image"]
-                self.set_image(frames_directory + image)
+            if "frames" in current_state:
+                self.set_animation_frame()
             else:
-                self.set_image(animation_states[animation_state]["static image"])
+                self.set_image(current_state["image"])
     def count_or_next_frame(self):
-        current_state = self.states[self.states["current state"]]
-        if "dict" in current_state:
+        current_state = self.get_state_data()
+        if "frames" in current_state:
             self.counter += 1
-            delay = current_state["dict"][current_state["array"][self.current_frame]]
-            if self.counter > delay:
+            if self.counter > current_state["frames"][self.current_frame]["delay"]:
                 self.counter = 0
                 self.current_frame += 1
-                if self.current_frame > len(current_state["array"]) - 1:
+                if self.current_frame > len(current_state["frames"]) - 1:
                     self.current_frame = 0
-                self.set_image(current_state["array"][self.current_frame])
+                self.set_animation_frame()
     def get_state(self):
-        return self.states["current state"]
+        return self.state_data["current animation state"]
+    def get_state_data(self):
+        return self.state_data["animation states"][self.get_state()]
+    def set_animation_frame(self):
+        current_state = self.get_state_data()
+        frames_directory = current_state["frames directory"]
+        image = current_state["frames"][self.current_frame]["image"]
+        self.set_image(frames_directory + image)
+        
 
 class Player(Animated_Field_Object):
     def __init__(self, screen, game_data, player_data):

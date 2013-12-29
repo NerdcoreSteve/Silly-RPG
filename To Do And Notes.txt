@@ -6,6 +6,8 @@ The editor should allow you to easily direct your own cutscenes.
 
 What about licenses for the images and game-content? Should we do a creative commons attribution?
 
+can we embed cc license info in png metadata?
+
 CURRENT GAME
 change json to a more sensible format:
 and to include all game data, not just player's
