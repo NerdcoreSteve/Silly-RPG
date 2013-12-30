@@ -84,8 +84,8 @@ class Player(Animated_Field_Object):
             field.move([-1 * direction[0], -1 * direction[1]])
 
 class Field(object):
-    def __init__(self):
-        self.field_objects = [Field_Object("assets/images/grass.png", [0, 0], [0, 0, 218, 145]),
+    def __init__(self, field_data):
+        self.field_objects = [Field_Object(field_data["objects"][0]["image"], [0, 0], [0, 0, 218, 145]),
                               Field_Object("assets/images/sidewalk.png", [218, 145])]
     def move(self, direction):
         for field_object in self.field_objects:
@@ -115,7 +115,7 @@ screen = pygame.display.set_mode(screen_size)
 black = 0, 0, 0
 
 player = Player(screen, game_data, game_data2["player"])
-field = Field()
+field = Field(game_data2["field"])
 
 frame_rate = 60
 clock = pygame.time.Clock()
