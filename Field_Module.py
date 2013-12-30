@@ -3,8 +3,7 @@ from Field_Object_Module import Field_Object
 
 class Field(object):
     def __init__(self, field_data):
-        self.field_objects = [Field_Object(field_data["objects"][0]["image"], [0, 0], [0, 0, 218, 145]),
-                              Field_Object("assets/images/sidewalk.png", [218, 145])]
+        self.field_objects = [Field_Object(field_data["objects"][0]["image"], field_data["objects"][0]["position"], field_data["objects"][0]["collision rectangle"]), Field_Object(field_data["objects"][1]["image"], field_data["objects"][1]["position"])]
     def move(self, direction):
         for field_object in self.field_objects:
             field_object.reposition(direction)
@@ -17,3 +16,5 @@ class Field(object):
     def blit(self, screen):
         for field_object in self.field_objects:
             field_object.blit(screen)
+
+
