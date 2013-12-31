@@ -1,0 +1,3 @@
+
+Notes:
+There should be dialog that can happen in all modes. Cutscene, Wandering, Battle.

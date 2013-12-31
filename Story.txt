@@ -31,22 +31,31 @@ Bully1: "I didn't know you'd bought that."
 Bully2: "Who said anything about buying it?" [yuk yuk :P ]
 
 Bonnie: "Give it back! Aniyah, help me!"
+choose 0 or 1
 
-[The following is an attempt at a dialog tree. I *think* this is valid json. I would like make the format such that dialog can be re-used and looped through as well...]
+0
+Aniyah: "Theives! Return my sister's computational device to her!"
+Bonnie: "You guys here that! you're in trouble now!",
+Bully1: "What'dya think you're Captain Fantastic? [Captain Fantastic is a fictional character in this universe that I just made up] You're nothing special.",
+got to 2
 
-{"dialog-tree":{"<choices>":{
-    "Theives! Return my sister's computational device to her!":[
-        "Bonnie: You guys here that! you're in trouble now!",
-        "Bully1: What'dya think you're Captain Fantastic? [Captain Fantastic is a fictional character in this universe that I just made up] You're nothing special.",
-        "Bully2: Here.. [the bully throws the computer to bonnie, who catches it. Then both bullies move toward Aniyah.]",
-        "Bonnie: Jerks! [We then move to her 'typing at the computer' animation] Is it broken?",
-        "Bully1: (All three big kids go to a fighting stance animation) We're gonna teach you a lesson!",
-        "<goto: battle>"],
-    "Whatevs. Guess you don't have a computer now sis.":[
-        "Bonnie: Aniyah!",
-        "Bully1: Yah hear that? The computer's ours now!",
-        "Bully2: [to Aniya] Hey, you're alright. You wanna go beat up on the other kids?",
-        "<choices>":{}]}
+1
+Aniyah: "Whatevs. Guess you don't have a computer now sis.":[
+Bonnie: "Aniyah!"
+Bully1: "Yah hear that? The computer's ours now!"
+Bully2: (to Aniya) "Hey, you're alright. You wanna go beat up on the other kids?"
+
+2
+Bully2: "Here.. [the bully throws the computer to bonnie, who catches it. Then both bullies move toward Aniyah.]",
+Bonnie: "Jerks!" (we then move to her 'typing at the computer' animation) "Is it broken?"
+Bully1: (All three big kids go to a fighting stance animation) "We're gonna teach you a lesson!"
+Cut to Battle Scene
+
+        "<choices>":{"Hah! As if I would help a villain like you attack defenseless children! Have at thee!":["Bully1: (The two bullies close in on our hero.) We're gonna shut you up dweeb!",
+        "<go to battle>"],
+                     "Sounds awesome.":["Bully1: Uh huh. We're not fooled at all.",
+                                        "Bully2: (The two bullies close in on our hero) We're going to teach you a lesson Dweeb!",
+                                        "<go to battle>"]}]}
     }
 }
 
