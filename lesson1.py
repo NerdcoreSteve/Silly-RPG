@@ -1,71 +1,55 @@
 import sys, pygame, re, json
 
-#let's say I have an array of numbers, and I want to double each of their values.
+#So the idea is that you have a list of dictionaries from which you want
+#to make a list of objects. Let's start with a simpler example.
 
-array = [1, 2, 3, 4, 5]
+#Here's a dictionary with two things in it.
+dict = {"number 1":5, "number 2":13}
 
-#I'm not sure how familiar you are with array indexes but if you type
-print array[0]
-#you'll get 1
+#Here's how you access the first number
+print dict["number 1"]
 
-#if you type
-print array[3]
-#you'll get 4
+#and now the second number
+print dict["number 2"]
 
-#if you type print array[100] you'll get an error
-#I'd like this code to run so I'll keep it commented out
+#now let's talk about arrays for a bit
 
-#You can also use a variable as an index
-i = 3
-print array[i] #this will print 4
-i = 4
-print array[i] #this will print 4
+#here's an array with 4 elements
+array = [23, 42, 87, 99]
 
-#So if I want to double each of the array's values I could do it this way
-array[0] = array[0] * 2
-array[1] = array[1] * 2
-array[2] = array[2] * 2
-array[3] = array[3] * 2
-array[4] = array[4] * 2
+print array[0] #prints 23
+print array[2] #prints 87
+#print array[4] would cause an error if it wasn't commented out
 
-#that works as far as it goes but it's pretty tiresome
-#also it becomes difficult when your array gets big.
-#What if your array has 100 or 1000 items?
+#The easiest way to do something with all the elements in this array
+#is to use a for loop
+for element in array:
+    print element
+#in this example the for loop is called 4 times.
+#The first time element is 23, the next time it's 42, and so on.
 
-#So, in your email you referenced the while loop
-i = 5
-while i > 2:
-    print i
-    i -= 1 #this statment is the same as i = i - 1
-    print "I can put anything I want in here."
-    print "Anything in this block will execute as many times, "
-    print "as the condition in the while loop (i > 2) is true."
+#Ok, now lets talk about objects for a bit
+#Here's a simple class, which is a blueprint for the creation of objects
+class Simple_Class(object):
+    def __init__(self, number1, number2):
+        self.number1 = number1
+        self.number2 = number2
 
-print "After that it stops repeating."
-print "The 4 indented lines above repeat 3 times."
-print "These three print statements don't repeat."
+#The first line is a class definition, the (object) bit says that this class
+#inherits from the object class, which is the highest object in the class
+#class heirarchy.
 
-#Here's one way to loop through the arrays
-i = 4
-while i >= 0:
-    array[i] = array[i] * 2
-    print array[i]
-    i -= 1
+#The second line is the beginning of Simple_Class's constructor. All
+#constructors in python are named __init__. All the constructor does is 
+#create new variables in Simple_Class called number1 and number2 and assigns
+#them the values of the parameters (number1 and number2) in the constructor.
 
-#But there's a problem
-#What if you don't know how big your array is?
-#We're making a game that has a json file. That file will be editable by
-#the user. They can make any number of field objects. We won't know in
-#advance how many objects there will be.
+#Now we can do something like this:
+simple_object = Simple_Class(dict["number 1"], dict["number 2"])
+#if the above line confuses you just look at the code above or email me
 
-#Thankfully this comes up often enough that almost all languages have
-#a syntax for looping through a list of elements. In python it's their
-#version of the for loop
-print "loop"
-for array_element in array:
-    print array_element
-print "loop"
-for array_element in array:
-    array_element *= 2
-for array_element in array:
-    print array_element
+#We can access the numbers in simple object using this syntax
+print simple_object.number1
+print simple_object.number2
+
+#but We wanted an array of Game objects created from an array of 
