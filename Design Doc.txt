@@ -1,3 +1,5 @@
+--Synopsis
+Silly RPG will be an RPG with three main modes: Wander, Battle, Cutscene, and Limited Animation. 
 
-Notes:
-There should be dialog that can happen in all modes. Cutscene, Wandering, Battle.
+-Dialog-
+Dialog is a word balloon that shows up on the top or bottom half of the screen. If the player is on the bottom half, the dialog is on the top and vice versa. Text is printed over a timed interval (i.e. there is a delay after each character and further delays are possible for dramatic pauses etc.) and is available in all modes.
