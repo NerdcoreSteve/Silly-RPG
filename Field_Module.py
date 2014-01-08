@@ -3,7 +3,12 @@ from Field_Object_Module import Field_Object
 
 class Field(object):
     def __init__(self, field_data):
-        self.field_objects = [Field_Object(field_data["objects"][0]["image"], field_data["objects"][0]["position"], field_data["objects"][0]["collision rectangle"]), Field_Object(field_data["objects"][1]["image"], field_data["objects"][1]["position"])]
+        self.field_objects = []
+        for object_dict in field_data["objects"]:
+            if "collision rectagle" in object_dict:
+                self.field_objects.append(Field_Object(object_dict["image"], object_dict["position"], object_dict["collision rectangle"]))
+            else:
+                self.field_objects.append(Field_Object(object_dict["image"], object_dict["position"]))
     def move(self, direction):
         for field_object in self.field_objects:
             field_object.reposition(direction)
