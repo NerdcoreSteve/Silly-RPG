@@ -1,17 +1,17 @@
 ---Game Engine---
---Modes---
-Silly RPG will be an RPG with three main modes: Wander, Battle, Cutscene, and Limited Animation. The same field is shared between Battle Mode, Cutscene Mode, and Wander. Dialog is a feature available in all modes.
+--States---
+Silly RPG will be an RPG with three main states: Wander, Battle, Cutscene, and Limited Animation. The same field is shared between Battle State, Cutscene State, and Wander. Dialog is a feature available in all states.
 
 -Dialog-
-Dialog is a word balloon that shows up on the top or bottom half of the screen, depending on the game-content creator. Text is printed over a timed interval (i.e. there is a delay after each character and further delays are possible for dramatic pauses etc.) and is available in all modes. There is also the option to have animated frames in a box inside and on the left-hand side of the dialog balloon.
+Dialog is a word balloon that shows up on the top or bottom half of the screen, position depends on the game-content creator. Text is printed over a timed interval (i.e. there is a delay after each text-character and further delays are possible for dramatic pauses etc). Dialog is available in all states. There is also the option to have animated frames in a box inside and on the left-hand side of the dialog balloon.
 
--Cutscene Mode-
-In this mode the player, npcs, and camera position are under scripted control as well as dialog. The player is still able to choose dialog options.
+-Cutscene State-
+In this state the player, npcs, and camera position are under scripted control as well as dialog. The player is still able to choose dialog options.
 
--Battle Mode-
-Battle Mode is always preceded and succeeded by Cutscene mode. This allows the game content creator to properly position npc's and the player (from here on called combatants) before and after battle. Since there will be no logic to tell combatants to have different animations depending on what position they are in relation to each other, it's recomended that the game content creators choose either to have their battles all occur from left to right (e.g. early final fantasy games) or from top to bottom (e.g. chrono trigger).
+-Battle State-
+Battle State is always preceded and succeeded by Cutscene state. This allows the game content creator to properly position npc's and the player (from here on called combatants) before and after battle. Since there will be no logic to tell combatants to have different animations depending on what position they are in relation to each other, it's recomended that the game content creators choose either to have their battles all occur from left to right (e.g. early final fantasy games) or from top to bottom (e.g. chrono trigger).
 
-The player and npcs will be have the same position on the field they had at the end of cutscene mode (it is up to the user of the Game Creation Tool to make sure the screen can show both). The game content creator determines which frames each combatant has at all times.
+The player and npcs will be have the same position on the field they had at the end of cutscene state (it is up to the user of the Game Creation Tool to make sure the screen can show both). The game content creator determines which frames each combatant has at all times.
 
 
 
