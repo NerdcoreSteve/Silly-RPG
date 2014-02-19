@@ -8,6 +8,10 @@ What about licenses for the images and game-content? Should we do a creative com
 
 can we embed cc license info in png metadata?
 
+Only save opposite corners of rects in a file.
+
+Editor should have drag-and-drop
+
 CURRENT GAME
 change json to a more sensible format:
 and to include all game data, not just player's
