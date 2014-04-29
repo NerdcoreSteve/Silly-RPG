@@ -8,6 +8,8 @@
                 "frames directory":"assets/images/player/",
                 "frames":[
                     {"image":"player_back1.png", "delay":10},
+                    {"image":"player_back2.png", "delay":10},
+                    {"image":"player_back1.png", "delay":10},
                     {"image":"player_back2.png", "delay":10, "transform":"flip"}
                 ]
             },
@@ -15,6 +17,8 @@
             "walking south":{
                 "frames directory":"assets/images/player/",
                 "frames":[
+                    {"image":"player_front1.png", "delay":10},
+                    {"image":"player_front2.png", "delay":10},
                     {"image":"player_front1.png", "delay":10},
                     {"image":"player_front2.png", "delay":10, "transform":"flip"}
                 ]
@@ -38,7 +42,7 @@
         }
     },
     "field":{
-        "objects":[
+        "elements":[
             {"image":"assets/images/grass.png",
              "position":[0,0],
              "collision rectangle":[0, 0, 218, 145]},

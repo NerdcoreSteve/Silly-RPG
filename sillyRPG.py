@@ -1,27 +1,27 @@
-import sys, pygame, re, json
+import sys, pygame, json
 
 class Field(object):
     def __init__(self, field_data):
-        self.field_objects = []
-        for object_dict in field_data["objects"]:
+        self.field_elements = []
+        for object_dict in field_data["elements"]:
             if "collision rectagle" in object_dict:
-                self.field_objects.append(Field_Object(object_dict["image"], object_dict["position"], object_dict["collision rectangle"]))
+                self.field_elements.append(Field_Element(object_dict["image"], object_dict["position"], object_dict["collision rectangle"]))
             else:
-                self.field_objects.append(Field_Object(object_dict["image"], object_dict["position"]))
+                self.field_elements.append(Field_Element(object_dict["image"], object_dict["position"]))
     def move(self, direction):
-        for field_object in self.field_objects:
+        for field_object in self.field_elements:
             field_object.reposition(direction)
     def collision_detected(self, player):
-        for field_object in self.field_objects:
+        for field_object in self.field_elements:
             if field_object.obstacle_rect:
                 if field_object.collision_detected(player):
                     return True
         return False
     def blit(self, screen):
-        for field_object in self.field_objects:
+        for field_object in self.field_elements:
             field_object.blit(screen)
 
-class Field_Object(object):
+class Field_Element(object):
     def __init__(self, image_path, position_offset, obstacle_rect_points = 0):
         self.set_image(image_path)
         self.rect = self.image.get_rect()
@@ -39,21 +39,18 @@ class Field_Object(object):
             self.obstacle_rect = self.obstacle_rect.move(position_offset)
     def collision_detected(self, field_object):
         return self.obstacle_rect.colliderect(field_object.obstacle_rect)
-    def set_image(self, image_path):
-        match_groups = re.match(r'^flip (.*)', image_path)
-        if match_groups:
-            self.image = pygame.image.load(match_groups.group(1))
+    def set_image(self, image_path, flip = False):
+        self.image = pygame.image.load(image_path)
+        if flip:
             self.image = pygame.transform.flip(self.image, True, False)
-        else:
-            self.image = pygame.image.load(image_path)
 
-class Animated_Field_Object(Field_Object):
+class Animated_Field_Element(Field_Element):
     def __init__(self, position_offset, state_data):
         if "collision rectangle" in state_data:
             obstacle_rect_points = state_data["collision rectangle"]
         else:
             obstacle_rect_points = 0
-        Field_Object.__init__(self, 
+        Field_Element.__init__(self, 
             state_data["animation states"][state_data["current animation state"]]["image"],
             position_offset,
             obstacle_rect_points)
@@ -70,7 +67,7 @@ class Animated_Field_Object(Field_Object):
                 self.set_animation_frame()
             else:
                 self.set_image(current_state["image"])
-    def count_or_next_frame(self):
+    def tick(self):
         current_state = self.get_state_data()
         if "frames" in current_state:
             self.counter += 1
@@ -88,11 +85,14 @@ class Animated_Field_Object(Field_Object):
         current_state = self.get_state_data()
         frames_directory = current_state["frames directory"]
         image = current_state["frames"][self.current_frame]["image"]
-        self.set_image(frames_directory + image)
+        flip = False
+        if "transform" in current_state["frames"][self.current_frame]:
+            flip = True;
+        self.set_image(frames_directory + image, flip)
 
-class Player(Animated_Field_Object):
+class Player(Animated_Field_Element):
     def __init__(self, screen, game_data, player_data):
-        Animated_Field_Object.__init__(self, [0, 0], player_data)
+        Animated_Field_Element.__init__(self, [0, 0], player_data)
         screen_rect = screen.get_rect()
         self.rect.centerx = screen_rect.centerx
         self.rect.centery = screen_rect.centery
@@ -102,10 +102,10 @@ class Player(Animated_Field_Object):
         if field.collision_detected(self):
             field.move([-1 * direction[0], -1 * direction[1]])
 
-class NPC(Animated_Field_Object):
+class NPC(Animated_Field_Element):
     def __init__(self, screen, npc_data):
         #TODO hard-code for now, use json
-        Animated_Field_Object.__init__(self, [0, 0], player_data)
+        Animated_Field_Element.__init__(self, [0, 0], player_data)
             
 game_data = json.loads(open('sillyRPG.json', 'r').read())
 game_data2 = json.loads(open('sillyRPGj2.json', 'r').read())
@@ -136,7 +136,7 @@ while 1:
             if event.key == pygame.K_ESCAPE:
                 sys.exit()
 
-    player.count_or_next_frame()
+    player.tick()
 
     #can I put how states transition in the json? maybe lock them to keys?
     #put them as actual keys for now but perhaps as intermediary map ids later?
