@@ -1,3 +1,24 @@
+---Game Engine---
+--States---
+Silly RPG will be an RPG with three main states: Wander, Battle, Cutscene, and Limited Animation. The same field is shared between Battle State, Cutscene State, and Wander. Dialog is a feature available in all states.
+
+-Dialog-
+Dialog is a word balloon that shows up on the top or bottom half of the screen, position depends on the game-content creator. Text is printed over a timed interval (i.e. there is a delay after each text-character and further delays are possible for dramatic pauses etc). Dialog is available in all states. There is also the option to have animated frames in a box inside and on the left-hand side of the dialog balloon.
+
+-Cutscene State-
+In this state the player, npcs, and camera position are under scripted control as well as dialog. The player is still able to choose dialog options.
+
+-Battle State-
+Battle State is always preceded and succeeded by Cutscene state. This allows the game content creator to properly position npc's and the player (from here on called combatants) before and after battle. Since there will be no logic to tell combatants to have different animations depending on what position they are in relation to each other, it's recomended that the game content creators choose either to have their battles all occur from left to right (e.g. early final fantasy games) or from top to bottom (e.g. chrono trigger).
+
+The player and npcs will be have the same position on the field they had at the end of cutscene state (it is up to the user of the Game Creation Tool to make sure the screen can show both). The game content creator determines which frames each combatant has at all times.
+
+
+
+--Objects--
+-Field-
+
+---Game Creation Tool---
 --STORY SCRIPT--
 [note: anything in brackets are used for author commentary]
 Synopsis:
@@ -85,3 +106,94 @@ Bonnie Booker: Aniyah's little genius sister.
 Do a short first episode where Aniyah fights a villan that keeps a marvelous creature (digimon) as a pet, saves the creature, and becomes friends with it. Her other friends are having adventures too but they're not yet playable characters
 
 
+BUCKET
+I should be able to make the player character exactly like npcs, only you control them and the camera should be connected to the player. I need to connect the camera to the player, when the player is walking in the field, then when there is a cut scene, I simply take complete control of the camera
+player should have their own current position just like an npc
+
+The editor should allow you to easily direct your own cutscenes.
+
+What about licenses for the images and game-content? Should we do a creative commons attribution?
+
+can we embed cc license info in png metadata?
+
+Only save opposite corners of rects in a file.
+
+Editor should have drag-and-drop
+
+CURRENT GAME
+change json to a more sensible format:
+and to include all game data, not just player's
+actually you should write it all out here before changing the real json
+make new json file and gradually adapt to using new json, then get rid of old json file
+make sure this file format looks good and makes sense.
+each frame has its own collision rect
+    what do you do when a change in rect makes an overlap happen? a slow move outward from each
+        of the rect's centers.
+try to make the python code as general as possible, fit as much as you can into the json, try to make it very customizeable.
+
+split json files, player, field, maybe others?
+
+make two field json's, the game should be able to load both and stitch them together.
+
+document all in wiki, keep updated
+    what about code comments? (look up conventions)
+
+game editor, mouse controlled w hotkeys? keep it updated with features of game
+    strip json of all un-needed spaces and \n's
+
+make more objects, stuff she can walk behind, and stuff that animates, stuff that she can interact
+with, open, break, etc.
+
+can I have a kind of game object that has, not only coll rects, but interact rects? Like a space ship that you can go to the door of, and then and only then the door will open if you hit space or something?
+
+keyboard mappings should be configurable, don't hit things with space, hit them with "activate", shoudl the number of buttons you can use be configurable?
+
+make npcs with programmable actions/animations/paths
+    a set of instructions that is basically animated object state changes and movements
+    should there be some kind of lookup table that indicates where all npc's are in the game?
+
+transparencies
+    "transform":"tranluscent" (see through)
+make more images and make more game content with editor
+interact with people and objects
+    switches and doors and stuff.
+    text and drawing primitives for word balloons and other menus
+    avatars in dialog boxes, timed printing out of dialog
+re-read all ms paint adventures for inspiration
+experience rewards: items that gain exp like in ratchet and clank?
+adventure game inventory
+armor, weapons, items, etc
+find items in field, treasure chests, people
+money and shopping
+Battle engine: final fantasy? chrono trigger? earthbound?
+attack, pyshcic powers
+cut-scenes like chrono-trigger
+in field, reading minds, pyschic influence, telekinesis to move and retrieve things
+party follows you like in earthbound
+subset of monsters are pokemon pets?
+other subset of monsters are possible henchmen?
+replay or research kotor for inspiration
+replay or research diablo 2 for inspiration
+research diablo 3 for inspiration
+replay other rpgs you have for inspiration
+research other video game and table-top rpgs for more inspiration
+plot-story tree
+    can I learn and add game ai?
+finish game
+make a good linux, windows, and mac installer.
+
+SEQUEL I
+make isometric platformer a little like chain of memories, but I want good sidescroller action too
+dynamically generated content.
+keep all features from old game
+avatars can vary, like one of the players could be in a mech suit.
+vehicles and mounts
+vehicle, mount action in field
+more skills, abilities, gear.
+you see what you wear
+    editor allows you to super-impose images
+craft all items
+
+SEQUEL II
+still 2D
+add as many game elements from as many retro games and modern games as you can think of. It should be designed in such a general way that your game can flow from one game genre to another or indeed to mix any amount of them together or create new ones as easily as possible.
