@@ -197,3 +197,88 @@ craft all items
 SEQUEL II
 still 2D
 add as many game elements from as many retro games and modern games as you can think of. It should be designed in such a general way that your game can flow from one game genre to another or indeed to mix any amount of them together or create new ones as easily as possible.
+TODO
+set collision detection
+
+do cc sa-by license for all assets (just like action steve)
+
+evaluate code and see if you can make improvements
+    using the command pattern is a good start
+    make uml diagram and other documentation
+        use stuff on site for documentation and uml, don't just commit it.
+
+set hops for editor and making simple suburban park, do hops
+    keep uml and other documentation up to date.
+
+any refactoring or other design improvements?
+
+what do you really need to keep in oldnotes.txt?
+
+CURRENTLY WORKING ON
+bug fixing and sundry tasks
+
+ON DEV CYCLE STAGE
+Not in a stage yet
+
+DEV CYCLE (change this up as you learn)
+decide what feature you're going to add next
+
+make generalized design [big marker on napkin, only a few sentences]
+
+on a high level, decide what [sprints?] will be needed to accomplish this design
+
+get a little more specific designing your next [sprint?]
+
+come up with more granular hops for the first [sprint?]
+
+always have two copies of uml, one for "finished", one for "working-on". Make documentation for first hop and add to working_on.dia for first hop.
+
+do all hops until sprint is done, do all sprints until feature is added
+
+test feature (should really learn how to write/do tests up front)
+
+look for bugs and squash them, do a similar dev cycle for them.
+
+add feature to saving (if necessary) and editor, do similar to above for editor addition
+
+add new game content using new feature
+
+evalute design, do you need to refactor or do any other improvements, do a similar dev cycle for those.
+
+repeat
+
+WHAT'S NEXT?
+    editor
+    simple suburban park area
+    saving (for now just your location)
+    interactables
+        they animate, move of their own accord, have state,
+            you can dialog with them. They are treasure chests
+            doors(they can block your way or become non-blocking)
+            npcs and all kindsa things
+    populate the park with kids and other kinds of interactables
+    inventory
+        you can use things with other things or use them on interactibles
+    make a separate level that has similarities to the park but everything is sci fi and monsters
+        some kids play along and others don't so you have monsters saying "I don't wanna play
+            your stupid game". But you are collecting stuff, keys, unlocking doors, etc.
+            it's all pretend.
+    simple battle
+        hp, attack, defense, no equipment
+        no separate mode like earthbound
+        make it realtime?
+    add battle to pretend session
+    equipment and items
+    add another battle to pretend session using these
+        you get in-game bonuses for using or getting equipment?
+    cutscenes
+        What is a cutscene but a bunch of interactibles doing things on cue
+    add suburban street, add cutscene with bullies and sister, add battle with bullies
+    sliding, animated images cutscenes or "movies"
+    intro movie and beginning and ending credits
+    make installer, should be very easy for users.
+    skills? (hacking, psychic powers, crafting...)
+    anything else?
+    start writing game script, think about the process of script writing as you do.
+    add features and game content showing those features as you see the need for
+        new features as you write.

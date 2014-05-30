@@ -27,16 +27,16 @@
             "walking east":{
                 "frames directory":"assets/images/player/",
                 "frames":[
-                    {"image":"player_side1.png", "delay":10},
-                    {"image":"player_side2.png", "delay":10}
+                    {"image":"player_side2.png", "delay":10},
+                    {"image":"player_side1.png", "delay":10}
                 ]
             },
             "standing west":{"image":"assets/images/player/player_side1.png", "transform":"flip"},
             "walking west":{
                 "frames directory":"assets/images/player/",
                 "frames":[
-                    {"image":"player_side1.png", "delay":10, "transform":"flip"},
-                    {"image":"player_side2.png", "delay":10, "transform":"flip"}
+                    {"image":"player_side2.png", "delay":10, "transform":"flip"},
+                    {"image":"player_side1.png", "delay":10, "transform":"flip"}
                 ]
             }
         }
