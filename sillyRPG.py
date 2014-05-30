@@ -5,7 +5,7 @@ class Field(object):
     def __init__(self, field_data):
         self.field_elements = []
         for object_dict in field_data["elements"]:
-            if "collision rectagle" in object_dict:
+            if "collision rectangle" in object_dict:
                 self.field_elements.append(Field_Element(object_dict["image"], \
                                            object_dict["position"], \
                                            object_dict["collision rectangle"]))

@@ -1,7 +1,5 @@
 TODO
 
-fix collision detection
-
 make uml diagram of code with dia
 
 try to figure out how to refactor the code
