@@ -1,7 +1,15 @@
 TODO
 
-make uml diagram of code with dia
-
 try to figure out how to refactor the code
+    Field, Field_Element and Player look good
+    Animated_Field_Element needs work
+    re-evaluate json
+    use a variant of the command pattern
+    how's it look? 
+
+Do a better job of designing(art) the player, design an area for her to explore, make the tiles and place them.
+
+license all assets with permissive cc license.
 
 lay out some iterations and start on the first one
+    start with making an editor
