@@ -13,3 +13,9 @@ license all assets with permissive cc license.
 
 lay out some iterations and start on the first one
     start with making an editor
+
+POSSIBLE DESIGN
+In this game
+http://www.mspaintadventures.com/?s=6&p=002153
+you sometimes click on stuff and a new picture appears with dialog that goes over it.
+neat.

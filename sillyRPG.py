@@ -60,55 +60,55 @@ class Animated_Field_Element(Field_Element):
 
     def __init__(self, state_data):
         Field_Element.__init__(self, state_data)
-        self.state_data = state_data
-        #TODO this is a bit of a hack
-        starting_animation_state = state_data["current animation state"]
-        state_data["current animation state"] = ""
-        self.change_animation_state(starting_animation_state)
+        self.animation_states = state_data["animation states"]
+        self.animation_states["current"] = ""
+        self.set_animation_state(self.animation_states["start"])
+        self.set_animation_frame() #sets image
         self.rect = self.image.get_rect()
 
-    def change_animation_state(self, animation_state):
-        if animation_state in self.state_data["animation states"] and \
-           self.state_data["current animation state"] is not animation_state:
-            self.state_data["current animation state"] = animation_state
-            current_state = self.get_state_data()
+    def set_animation_state(self, new_animation_state):
+        if new_animation_state in self.animation_states and \
+           self.animation_states["current"] is not new_animation_state:
+            self.animation_states["current"] = new_animation_state
             self.current_frame = 0
             self.counter = 0
-            if "frames" in current_state:
-                self.set_animation_frame()
-            else:
-                flip = False
-                if "transform" in current_state and current_state["transform"] == "flip":
-                    flip = True
-                self.set_image(current_state["image"], flip)
+
+    #TODO Code repeats itself a little bit...
+    #TODO Would it be better to make the json a little more bulky,
+    #TODO for the sake of making the code a little slimmer?
+    def set_animation_frame(self):
+        flip = False
+        current_animation_state_data = self.current_animation_state_data()
+        if "static image" in current_animation_state_data:
+            image = current_animation_state_data["static image"]
+            if "transform" in current_animation_state_data and \
+               current_animation_state_data["transform"] == "flip":
+                flip = True
+        else:
+            image = current_animation_state_data["frames directory"]
+            image_data = current_animation_state_data["frames"][self.current_frame]
+            image += image_data["image"]
+            if "transform" in image_data and \
+               image_data["transform"] == "flip":
+                flip = True
+        self.set_image(image, flip)
+
+    def current_animation_state(self):
+        return self.animation_states["current"]
+
+    def current_animation_state_data(self):
+        return self.animation_states[self.animation_states["current"]]
 
     def tick(self):
-        current_state = self.get_state_data()
-        if "frames" in current_state:
+        current_animation_state_data = self.current_animation_state_data()
+        if "frames" in current_animation_state_data:
             self.counter += 1
-            if self.counter > current_state["frames"][self.current_frame]["delay"]:
+            if self.counter > current_animation_state_data["frames"][self.current_frame]["delay"]:
                 self.counter = 0
                 self.current_frame += 1
-                if self.current_frame > len(current_state["frames"]) - 1:
+                if self.current_frame > len(current_animation_state_data["frames"]) - 1:
                     self.current_frame = 0
                 self.set_animation_frame()
-
-    def get_state(self):
-        return self.state_data["current animation state"]
-
-    def get_state_data(self):
-        return self.state_data["animation states"][self.get_state()]
-
-    def set_animation_frame(self):
-        current_state = self.get_state_data()
-        frames_directory = current_state["frames directory"]
-        image = current_state["frames"][self.current_frame]["image"]
-        #TODO I'm checking for flip in two places, is bad
-        flip = False
-        if "transform" in current_state["frames"][self.current_frame] \
-           and current_state["frames"][self.current_frame]:
-            flip = True;
-        self.set_image(frames_directory + image, flip)
 
 class Player(Animated_Field_Element):
 
@@ -158,33 +158,33 @@ while 1:
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
         field.move(right)
-        player.change_animation_state("walking west")
+        player.set_animation_state("walking west")
         if field.collision_detected(player):
             field.move(left)
     elif keys[pygame.K_RIGHT]:
         field.move(left)
-        player.change_animation_state("walking east")
+        player.set_animation_state("walking east")
         if field.collision_detected(player):
             field.move(right)
     elif keys[pygame.K_DOWN]:
         field.move(up)
-        player.change_animation_state("walking south")
+        player.set_animation_state("walking south")
         if field.collision_detected(player):
             field.move(down)
     elif keys[pygame.K_UP]:
         field.move(down)
-        player.change_animation_state("walking north")
+        player.set_animation_state("walking north")
         if field.collision_detected(player):
             field.move(up)
     else:
-        if(player.get_state() is "walking south"):
-            player.change_animation_state("standing south")
-        elif(player.get_state() is "walking north"):
-            player.change_animation_state("standing north")
-        elif(player.get_state() is "walking west"):
-            player.change_animation_state("standing west")
-        elif(player.get_state() is "walking east"):
-            player.change_animation_state("standing east")
+        if(player.current_animation_state() is "walking south"):
+            player.set_animation_state("standing south")
+        elif(player.current_animation_state() is "walking north"):
+            player.set_animation_state("standing north")
+        elif(player.current_animation_state() is "walking west"):
+            player.set_animation_state("standing west")
+        elif(player.current_animation_state() is "walking east"):
+            player.set_animation_state("standing east")
 
     screen.fill(black)
     field.blit(screen)

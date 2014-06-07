@@ -1,9 +1,9 @@
 {
     "player":{
         "collision rectangle":[29, 75, 25, 15],
-        "current animation state":"standing south",
         "animation states":{
-            "standing north":{"image":"assets/images/player/player_back1.png"},
+            "start":"standing south",
+            "standing north":{"static image":"assets/images/player/player_back1.png"},
             "walking north":{
                 "frames directory":"assets/images/player/",
                 "frames":[
@@ -13,7 +13,7 @@
                     {"image":"player_back2.png", "delay":5, "transform":"flip"}
                 ]
             },
-            "standing south":{"image":"assets/images/player/player_front1.png"},
+            "standing south":{"static image":"assets/images/player/player_front1.png"},
             "walking south":{
                 "frames directory":"assets/images/player/",
                 "frames":[
@@ -23,7 +23,7 @@
                     {"image":"player_front2.png", "delay":5, "transform":"flip"}
                 ]
             },
-            "standing east":{"image":"assets/images/player/player_side1.png"},
+            "standing east":{"static image":"assets/images/player/player_side1.png"},
             "walking east":{
                 "frames directory":"assets/images/player/",
                 "frames":[
@@ -31,7 +31,7 @@
                     {"image":"player_side1.png", "delay":5}
                 ]
             },
-            "standing west":{"image":"assets/images/player/player_side1.png", "transform":"flip"},
+            "standing west":{"static image":"assets/images/player/player_side1.png", "transform":"flip"},
             "walking west":{
                 "frames directory":"assets/images/player/",
                 "frames":[
