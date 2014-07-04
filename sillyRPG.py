@@ -2,10 +2,10 @@ import sys, pygame, json
 
 class Field(object):
 
-    def __init__(self, field_dict):
+    def __init__(self, field_data):
         self.field_elements = []
-        for field_element_dict in field_dict["field elements"]:
-                self.field_elements.append(Field_Element(field_element_dict))
+        for field_element_data in field_data["field elements"]:
+                self.field_elements.append(Field_Element(field_element_data))
 
     def move(self, direction):
         for field_element in self.field_elements:
@@ -24,21 +24,21 @@ class Field(object):
 
 class Field_Element(object):
 
-    def __init__(self, field_element_dict):
+    def __init__(self, field_element_data):
         self.image = False
         self.rect = False
         self.obstacle_rect = False
-        if "image" in field_element_dict:
-            self.set_image(field_element_dict["image"])
+        if "image" in field_element_data:
+            self.set_image(field_element_data["image"])
             self.rect = self.image.get_rect()
-        if "collision rectangle" in field_element_dict:
-            self.obstacle_rect = pygame.Rect(field_element_dict["collision rectangle"][0], 
-                                             field_element_dict["collision rectangle"][1],
-                                             field_element_dict["collision rectangle"][2],
-                                             field_element_dict["collision rectangle"][3])
-        #Since the inital position is 0,0 we can give position as position offset
-        if "position" in field_element_dict:
-            self.reposition(field_element_dict["position"])
+        if "collision rectangle" in field_element_data:
+            self.obstacle_rect = pygame.Rect(field_element_data["collision rectangle"][0], 
+                                             field_element_data["collision rectangle"][1],
+                                             field_element_data["collision rectangle"][2],
+                                             field_element_data["collision rectangle"][3])
+        #Since the inital position is always 0,0 we can give position as position offset
+        if "position" in field_element_data:
+            self.reposition(field_element_data["position"])
 
     def blit(self, screen):
         screen.blit(self.image, self.rect)
@@ -58,9 +58,9 @@ class Field_Element(object):
 
 class Animated_Field_Element(Field_Element):
 
-    def __init__(self, state_data):
-        Field_Element.__init__(self, state_data)
-        self.animation_states = state_data["animation states"]
+    def __init__(self, animated_field_element_data):
+        Field_Element.__init__(self, animated_field_element_data)
+        self.animation_states = animated_field_element_data["animation states"]
         self.animation_states["current"] = ""
         self.set_animation_state(self.animation_states["start"])
         self.set_animation_frame() #sets image
@@ -73,12 +73,10 @@ class Animated_Field_Element(Field_Element):
             self.current_frame = 0
             self.counter = 0
 
-    #TODO Code repeats itself a little bit...
-    #TODO Would it be better to make the json a little more bulky,
-    #TODO for the sake of making the code a little slimmer?
     def set_animation_frame(self):
         flip = False
-        current_animation_state_data = self.current_animation_state_data()
+        current_animation_state_data = \
+            self.animation_states[self.animation_states["current"]]
         if "static image" in current_animation_state_data:
             image = current_animation_state_data["static image"]
             if "transform" in current_animation_state_data and \
@@ -96,11 +94,9 @@ class Animated_Field_Element(Field_Element):
     def current_animation_state(self):
         return self.animation_states["current"]
 
-    def current_animation_state_data(self):
-        return self.animation_states[self.animation_states["current"]]
-
     def tick(self):
-        current_animation_state_data = self.current_animation_state_data()
+        current_animation_state_data = \
+            self.animation_states[self.animation_states["current"]]
         if "frames" in current_animation_state_data:
             self.counter += 1
             if self.counter > current_animation_state_data["frames"][self.current_frame]["delay"]:
