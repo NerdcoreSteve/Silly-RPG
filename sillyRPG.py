@@ -1,4 +1,31 @@
 import sys, pygame, json
+#TODO doesn't return to standing state
+#TODO arrow keys don't work as expected, may need to get hash of bools again
+
+game_data = json.loads(open('assets/json/sillyRPG.json', 'r').read())
+
+#TODO player_speed and screen size should be in the json
+frame_rate = 60
+player_speed = 5
+screen_size = width, height = 400, 300
+background_color = 0, 0, 0
+
+right = [player_speed, 0]
+left = [-1 * player_speed, 0]
+up = [0, -1 * player_speed]
+down = [0, player_speed]
+nowhere = [0,0]
+
+def opposite(direction):
+    if direction == down:
+        return up
+    if direction == up:
+        return down
+    if direction == left:
+        return right
+    if direction == right:
+        return left
+    return nowhere
 
 class Field(object):
 
@@ -91,15 +118,13 @@ class Animated_Field_Element(Field_Element):
                 flip = True
         self.set_image(image, flip)
 
-    def current_animation_state(self):
-        return self.animation_states["current"]
-
-    def tick(self):
+    def animation_tick(self):
         current_animation_state_data = \
             self.animation_states[self.animation_states["current"]]
         if "frames" in current_animation_state_data:
             self.counter += 1
-            if self.counter > current_animation_state_data["frames"][self.current_frame]["delay"]:
+            delay = current_animation_state_data["frames"][self.current_frame]["delay"]
+            if self.counter > delay:
                 self.counter = 0
                 self.current_frame += 1
                 if self.current_frame > len(current_animation_state_data["frames"]) - 1:
@@ -114,25 +139,50 @@ class Player(Animated_Field_Element):
         self.rect.centerx = screen_rect.centerx
         self.rect.centery = screen_rect.centery
         self.obstacle_rect = self.obstacle_rect.move([self.rect.left, self.rect.top])
-            
-game_data = json.loads(open('assets/json/sillyRPG.json', 'r').read())
 
-#TODO speed, screen size, and frame rate should be in the json
-speed = 5
-right = [speed, 0]
-left = [-1 * speed, 0]
-up = [0, -1 * speed]
-down = [0, speed]
+        self.direction = nowhere
+
+        self.animation_state_map = {}
+        self.animation_state_map[pygame.K_DOWN] = "walking south"
+        self.animation_state_map[pygame.K_UP] = "walking north"
+        self.animation_state_map[pygame.K_LEFT] = "walking west"
+        self.animation_state_map[pygame.K_RIGHT] = "walking east"
+        
+        self.direction_map = {}
+        self.direction_map[pygame.K_DOWN] = down
+        self.direction_map[pygame.K_UP] = up
+        self.direction_map[pygame.K_LEFT] = left
+        self.direction_map[pygame.K_RIGHT] = right
+        
+        self.stop_map = {}
+        self.stop_map["walking south"] = "standing south"
+        self.stop_map["walking north"] = "standing north"
+        self.stop_map["walking west"] = "standing west"
+        self.stop_map["walking east"] = "standing east"
+
+    def go(self, field, event_key):
+        if event_key in self.animation_state_map:
+            self.set_animation_state(self.animation_state_map[event_key])
+            self.direction = self.direction_map[event_key]
+
+    def stop(self):
+        self.direction = nowhere
+        current_animation_state = self.animation_states["current"]
+        self.set_animation_state(self.stop_map[current_animation_state])
+
+    def tick(self):
+        self.animation_tick()
+        if self.direction != nowhere:
+            field.move(opposite(self.direction))
+            if field.collision_detected(self):
+                field.move(self.direction)
 
 pygame.init()
-screen_size = width, height = 800, 600
 screen = pygame.display.set_mode(screen_size)
-black = 0, 0, 0
 
 player = Player(screen, game_data["player"])
 field = Field(game_data["field"])
 
-frame_rate = 60
 clock = pygame.time.Clock()
 
 while 1:
@@ -143,46 +193,14 @@ while 1:
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 sys.exit()
+            else:
+                player.go(field, event.key)
+        elif event.type == pygame.KEYUP:
+            player.stop()
 
-    player.tick()
-
-    #TODO this if-block sure looks ugly
-    #TODO some variant of the command pattern I think
-    #TODO with a dictionary matching keys to directions, and a dictionary for opposite directions
-    #TODO also collision detection in this if-block is bad
-    #player.move(field, direction_map[.......
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_LEFT]:
-        field.move(right)
-        player.set_animation_state("walking west")
-        if field.collision_detected(player):
-            field.move(left)
-    elif keys[pygame.K_RIGHT]:
-        field.move(left)
-        player.set_animation_state("walking east")
-        if field.collision_detected(player):
-            field.move(right)
-    elif keys[pygame.K_DOWN]:
-        field.move(up)
-        player.set_animation_state("walking south")
-        if field.collision_detected(player):
-            field.move(down)
-    elif keys[pygame.K_UP]:
-        field.move(down)
-        player.set_animation_state("walking north")
-        if field.collision_detected(player):
-            field.move(up)
-    else:
-        if(player.current_animation_state() is "walking south"):
-            player.set_animation_state("standing south")
-        elif(player.current_animation_state() is "walking north"):
-            player.set_animation_state("standing north")
-        elif(player.current_animation_state() is "walking west"):
-            player.set_animation_state("standing west")
-        elif(player.current_animation_state() is "walking east"):
-            player.set_animation_state("standing east")
-
-    screen.fill(black)
+    screen.fill(background_color)
+    #field.tick()
     field.blit(screen)
+    player.tick()
     player.blit(screen)
     pygame.display.update()
