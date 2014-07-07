@@ -1,20 +1,26 @@
 import sys, pygame, json
 #TODO doesn't return to standing state
-#TODO arrow keys don't work as expected, may need to get hash of bools again
+#TODO do other todos, npc's, objects and maybe a few other things before tackling the camera
+#TODO the camera can be another surface, smaller than the field, then the player would be in the field...
 
 game_data = json.loads(open('assets/json/sillyRPG.json', 'r').read())
 
-#TODO player_speed and screen size should be in the json
+#TODO player_walking_speed and screen size should be in the json
 frame_rate = 60
-player_speed = 5
-screen_size = width, height = 400, 300
+#TODO this should be an attribute of the player and part of the json, and perhaps an attribute of the player
+#TODO   game can play with
+player_walking_speed = 5
+screen_size = 400, 300
 background_color = 0, 0, 0
 
-right = [player_speed, 0]
-left = [-1 * player_speed, 0]
-up = [0, -1 * player_speed]
-down = [0, player_speed]
-nowhere = [0,0]
+#TODO it should be 1 instead of player_walking_speed, then when the player moves it will be
+#TODO [i*self.speed for i in direction] make function for this generalized purpose?
+#TODO a lot of this stuff 
+right = [player_walking_speed, 0]
+left = [-1 * player_walking_speed, 0]
+up = [0, -1 * player_walking_speed]
+down = [0, player_walking_speed]
+stopped = [0,0]
 
 def opposite(direction):
     if direction == down:
@@ -25,7 +31,7 @@ def opposite(direction):
         return right
     if direction == right:
         return left
-    return nowhere
+    return stopped
 
 class Field(object):
 
@@ -135,57 +141,76 @@ class Player(Animated_Field_Element):
 
     def __init__(self, screen, player_data):
         Animated_Field_Element.__init__(self, player_data)
+
+        #put player in center of screen
         screen_rect = screen.get_rect()
         self.rect.centerx = screen_rect.centerx
         self.rect.centery = screen_rect.centery
         self.obstacle_rect = self.obstacle_rect.move([self.rect.left, self.rect.top])
 
-        self.direction = nowhere
+        #set velocity to stopped
+        self.velocity = stopped
 
+        #TODO replace event keys with command enum and call key stack a command stack
+        #initialize maps used to DRY up player code
+        #begin maps
         self.animation_state_map = {}
         self.animation_state_map[pygame.K_DOWN] = "walking south"
         self.animation_state_map[pygame.K_UP] = "walking north"
         self.animation_state_map[pygame.K_LEFT] = "walking west"
         self.animation_state_map[pygame.K_RIGHT] = "walking east"
         
-        self.direction_map = {}
-        self.direction_map[pygame.K_DOWN] = down
-        self.direction_map[pygame.K_UP] = up
-        self.direction_map[pygame.K_LEFT] = left
-        self.direction_map[pygame.K_RIGHT] = right
-        
+        self.velocity_map = {}
+        self.velocity_map[pygame.K_DOWN] = down
+        self.velocity_map[pygame.K_UP] = up
+        self.velocity_map[pygame.K_LEFT] = left
+        self.velocity_map[pygame.K_RIGHT] = right
+
         self.stop_map = {}
         self.stop_map["walking south"] = "standing south"
         self.stop_map["walking north"] = "standing north"
         self.stop_map["walking west"] = "standing west"
         self.stop_map["walking east"] = "standing east"
+        #end maps
 
-    def go(self, field, event_key):
-        if event_key in self.animation_state_map:
-            self.set_animation_state(self.animation_state_map[event_key])
-            self.direction = self.direction_map[event_key]
+        #stack used so that player controls feel natural
+        self.key_stack = []
 
-    def stop(self):
-        self.direction = nowhere
-        current_animation_state = self.animation_states["current"]
-        self.set_animation_state(self.stop_map[current_animation_state])
+    #TODO change from key down/up to add_command, remove_command
+    def key_down(self, field, event_key):
+        self.key_stack.append(event_key)
+        self.set_movement_appropriate_animation_state()
+
+    def key_up(self, field, event_key):
+        self.key_stack.remove(event_key)
+        self.set_movement_appropriate_animation_state()
+
+    def set_movement_appropriate_animation_state(self):
+        #The very last command sets player motion
+        if self.key_stack: #if stack not empty
+            self.velocity = self.velocity_map[self.key_stack[-1]] #peek
+            self.set_animation_state(self.animation_state_map[self.key_stack[-1]])
+        else:
+            self.velocity = stopped
+            self.set_animation_state(self.stop_map[self.animation_states["current"]])
 
     def tick(self):
         self.animation_tick()
-        if self.direction != nowhere:
-            field.move(opposite(self.direction))
+        if self.velocity != stopped:
+            field.move(opposite(self.velocity))
             if field.collision_detected(self):
-                field.move(self.direction)
+                field.move(self.velocity)
 
 pygame.init()
 screen = pygame.display.set_mode(screen_size)
 
+#TODO use screen size from game_data here?
 player = Player(screen, game_data["player"])
 field = Field(game_data["field"])
 
 clock = pygame.time.Clock()
 
-while 1:
+while True:
     clock.tick(frame_rate)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -194,12 +219,13 @@ while 1:
             if event.key == pygame.K_ESCAPE:
                 sys.exit()
             else:
-                player.go(field, event.key)
+                player.key_down(field, event.key)
         elif event.type == pygame.KEYUP:
-            player.stop()
+            player.key_up(field, event.key)
 
+    #TODO ticks should only happen on clock ticks!
     screen.fill(background_color)
-    #field.tick()
+    #TODO field.tick()
     field.blit(screen)
     player.tick()
     player.blit(screen)
