@@ -1,27 +1,34 @@
 import sys, pygame, json
-#TODO BUG doesn't return to standing state
+#Remember you are on a branch for the top TODO!
+#TODO finish making player speed part of player object 
+#TODO finish todo's sprinkled within code
+#TODO save game to json file in folder specified by a config.json file in assets/json (for now just save player position)
+#TODO
 #TODO do other todos below, npc's, objects and maybe a few other things before tackling the camera
 #TODO the camera can be another surface, smaller than the field, then the player would be in the field...
 #TODO once camera is done, do dynamic buffering, perhaps in blocks
+#TODO special effects like earth quakes!
+#TODO cutscenes! move the camera according to a target, which can be "scripted"
 
 game_data = json.loads(open('assets/json/sillyRPG.json', 'r').read())
 
-#TODO player_walking_speed and screen size should be in the json
 frame_rate = 60
-#TODO this should be an attribute of the player and part of the json, and perhaps an attribute of the player
-#TODO   the game can play with
-player_walking_speed = 5
+#TODO This should be part of the player object
+player_walking_speed = int(game_data["player"]["walking speed"])
 screen_size = 400, 300
 background_color = 0, 0, 0
 
 #TODO it should be 1 instead of player_walking_speed, then when the player moves it will be
 #TODO [i*self.speed for i in direction] make function for this generalized purpose? number_times_array(number, array)
 #TODO a lot of this stuff 
-right = [player_walking_speed, 0]
-left = [-1 * player_walking_speed, 0]
-up = [0, -1 * player_walking_speed]
-down = [0, player_walking_speed]
-stopped = [0,0]
+right   = [ 1,  0]
+left    = [-1,  0]
+up      = [ 0, -1]
+down    = [ 0,  1]
+stopped = [ 0,  0]
+
+def velocity(speed, direction):
+    return [speed * component for component in direction]
 
 def opposite(direction):
     if direction == down:
@@ -136,7 +143,7 @@ class Animated_Field_Element(Field_Element):
                 self.current_frame += 1
                 if self.current_frame > len(current_animation_state_data["frames"]) - 1:
                     self.current_frame = 0
-                self.set_animation_frame()
+        self.set_animation_frame()
 
 class Player(Animated_Field_Element):
 

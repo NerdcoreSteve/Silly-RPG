@@ -1,5 +1,6 @@
 {
     "player":{
+        "walking speed":5,
         "collision rectangle":[29, 75, 25, 15],
         "animation states":{
             "start":"standing south",
