@@ -1,20 +1,21 @@
 import sys, pygame, json
-#TODO doesn't return to standing state
-#TODO do other todos, npc's, objects and maybe a few other things before tackling the camera
+#TODO BUG doesn't return to standing state
+#TODO do other todos below, npc's, objects and maybe a few other things before tackling the camera
 #TODO the camera can be another surface, smaller than the field, then the player would be in the field...
+#TODO once camera is done, do dynamic buffering, perhaps in blocks
 
 game_data = json.loads(open('assets/json/sillyRPG.json', 'r').read())
 
 #TODO player_walking_speed and screen size should be in the json
 frame_rate = 60
 #TODO this should be an attribute of the player and part of the json, and perhaps an attribute of the player
-#TODO   game can play with
+#TODO   the game can play with
 player_walking_speed = 5
 screen_size = 400, 300
 background_color = 0, 0, 0
 
 #TODO it should be 1 instead of player_walking_speed, then when the player moves it will be
-#TODO [i*self.speed for i in direction] make function for this generalized purpose?
+#TODO [i*self.speed for i in direction] make function for this generalized purpose? number_times_array(number, array)
 #TODO a lot of this stuff 
 right = [player_walking_speed, 0]
 left = [-1 * player_walking_speed, 0]
