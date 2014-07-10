@@ -1,5 +1,5 @@
 import sys, pygame, json
-#TODO finish todo's sprinkled within code
+#TODO make editor
 #TODO save game to json file in folder specified by a config.json file in assets/json (for now just save player position)
 #TODO
 #TODO do other todos below, npc's, objects and maybe a few other things before tackling the camera
@@ -7,12 +7,6 @@ import sys, pygame, json
 #TODO once camera is done, do dynamic buffering, perhaps in blocks
 #TODO special effects like earth quakes!
 #TODO cutscenes! move the camera according to a target, which can be "scripted"
-
-game_data = json.loads(open('assets/json/sillyRPG.json', 'r').read())
-
-frame_rate = 60
-screen_size = 400, 300
-background_color = 0, 0, 0
 
 #These directions are the only ones that exist in the game world
 #The functions below, change_speed and opposite_velocity, work on this assumption
@@ -204,12 +198,12 @@ class Player(Animated_Field_Element):
                 field.move(self.velocity)
 
 pygame.init()
-screen = pygame.display.set_mode(screen_size)
-
-#TODO use screen size from game_data here?
+game_data = json.loads(open('assets/json/sillyRPG.json', 'r').read())
+screen = pygame.display.set_mode(game_data["screen size"])
+background_color = 0, 0, 0
+frame_rate = 60
 player = Player(screen, game_data["player"])
 field = Field(game_data["field"])
-
 clock = pygame.time.Clock()
 
 while True:
@@ -225,7 +219,6 @@ while True:
         elif event.type == pygame.KEYUP:
             player.key_up(field, event.key)
 
-    #TODO ticks should only happen on clock ticks!
     screen.fill(background_color)
     #TODO field.tick()
     field.blit(screen)
