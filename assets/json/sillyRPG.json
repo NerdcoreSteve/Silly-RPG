@@ -1,7 +1,7 @@
 {
     "screen size":[400, 300],
     "player":{
-        "walking speed":5,
+        "walking speed":4,
         "collision rectangle":[29, 75, 25, 15],
         "animation states":{
             "start":"standing south",
@@ -9,36 +9,36 @@
             "walking north":{
                 "frames directory":"assets/images/player/",
                 "frames":[
-                    {"image":"player_back1.png", "delay":5},
-                    {"image":"player_back2.png", "delay":5},
-                    {"image":"player_back1.png", "delay":5},
-                    {"image":"player_back2.png", "delay":5, "transform":"flip"}
+                    {"image":"player_back1.png", "delay":7},
+                    {"image":"player_back2.png", "delay":7},
+                    {"image":"player_back1.png", "delay":7},
+                    {"image":"player_back2.png", "delay":7, "transform":"flip"}
                 ]
             },
             "standing south":{"static image":"assets/images/player/player_front1.png"},
             "walking south":{
                 "frames directory":"assets/images/player/",
                 "frames":[
-                    {"image":"player_front1.png", "delay":5},
-                    {"image":"player_front2.png", "delay":5},
-                    {"image":"player_front1.png", "delay":5},
-                    {"image":"player_front2.png", "delay":5, "transform":"flip"}
+                    {"image":"player_front1.png", "delay":7},
+                    {"image":"player_front2.png", "delay":7},
+                    {"image":"player_front1.png", "delay":7},
+                    {"image":"player_front2.png", "delay":7, "transform":"flip"}
                 ]
             },
             "standing east":{"static image":"assets/images/player/player_side1.png"},
             "walking east":{
                 "frames directory":"assets/images/player/",
                 "frames":[
-                    {"image":"player_side1.png", "delay":5},
-                    {"image":"player_side2.png", "delay":5}
+                    {"image":"player_side1.png", "delay":7},
+                    {"image":"player_side2.png", "delay":7}
                 ]
             },
             "standing west":{"static image":"assets/images/player/player_side1.png", "transform":"flip"},
             "walking west":{
                 "frames directory":"assets/images/player/",
                 "frames":[
-                    {"image":"player_side1.png", "delay":5, "transform":"flip"},
-                    {"image":"player_side2.png", "delay":5, "transform":"flip"}
+                    {"image":"player_side1.png", "delay":7, "transform":"flip"},
+                    {"image":"player_side2.png", "delay":7, "transform":"flip"}
                 ]
             }
         }
