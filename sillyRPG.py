@@ -1,6 +1,4 @@
 import sys, pygame, json
-#Remember you are on a branch for the top TODO! Keep using branches from now on!
-#TODO finish making player speed part of player object 
 #TODO finish todo's sprinkled within code
 #TODO save game to json file in folder specified by a config.json file in assets/json (for now just save player position)
 #TODO
