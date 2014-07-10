@@ -1,5 +1,5 @@
 import sys, pygame, json
-#Remember you are on a branch for the top TODO!
+#Remember you are on a branch for the top TODO! Keep using branches from now on!
 #TODO finish making player speed part of player object 
 #TODO finish todo's sprinkled within code
 #TODO save game to json file in folder specified by a config.json file in assets/json (for now just save player position)
@@ -13,33 +13,28 @@ import sys, pygame, json
 game_data = json.loads(open('assets/json/sillyRPG.json', 'r').read())
 
 frame_rate = 60
-#TODO This should be part of the player object
-player_walking_speed = int(game_data["player"]["walking speed"])
 screen_size = 400, 300
 background_color = 0, 0, 0
 
-#TODO it should be 1 instead of player_walking_speed, then when the player moves it will be
-#TODO [i*self.speed for i in direction] make function for this generalized purpose? number_times_array(number, array)
-#TODO a lot of this stuff 
+#These directions are the only ones that exist in the game world
+#The functions below, change_speed and opposite_velocity, work on this assumption
 right   = [ 1,  0]
 left    = [-1,  0]
 up      = [ 0, -1]
 down    = [ 0,  1]
 stopped = [ 0,  0]
 
-def velocity(speed, direction):
-    return [speed * component for component in direction]
+def change_speed(new_speed, velocity):
+    def change_velocity_component(new_speed, velocity_component):
+        if velocity_component == 0:
+            return 0
+        if velocity_component < 0:
+            return -1 * new_speed
+        return new_speed
+    return map(lambda velocity_component: change_velocity_component(new_speed, velocity_component), velocity)
 
-def opposite(direction):
-    if direction == down:
-        return up
-    if direction == up:
-        return down
-    if direction == left:
-        return right
-    if direction == right:
-        return left
-    return stopped
+def opposite_velocity(velocity):
+    return [-1 * component for component in velocity]
 
 class Field(object):
 
@@ -48,9 +43,9 @@ class Field(object):
         for field_element_data in field_data["field elements"]:
                 self.field_elements.append(Field_Element(field_element_data))
 
-    def move(self, direction):
+    def move(self, xy_offset):
         for field_element in self.field_elements:
-            field_element.reposition(direction)
+            field_element.reposition(xy_offset)
 
     def collision_detected(self, other_field_element):
         for field_element in self.field_elements:
@@ -84,10 +79,10 @@ class Field_Element(object):
     def blit(self, screen):
         screen.blit(self.image, self.rect)
 
-    def reposition(self, position_offset):
-        self.rect = self.rect.move(position_offset)
+    def reposition(self, xy_offset):
+        self.rect = self.rect.move(xy_offset)
         if(self.obstacle_rect):
-            self.obstacle_rect = self.obstacle_rect.move(position_offset)
+            self.obstacle_rect = self.obstacle_rect.move(xy_offset)
 
     def collision_detected(self, field_element):
         return self.obstacle_rect.colliderect(field_element.obstacle_rect)
@@ -149,6 +144,7 @@ class Player(Animated_Field_Element):
 
     def __init__(self, screen, player_data):
         Animated_Field_Element.__init__(self, player_data)
+        self.speed = int(player_data["walking speed"])
 
         #put player in center of screen
         screen_rect = screen.get_rect()
@@ -169,10 +165,10 @@ class Player(Animated_Field_Element):
         self.animation_state_map[pygame.K_RIGHT] = "walking east"
         
         self.velocity_map = {}
-        self.velocity_map[pygame.K_DOWN] = down
-        self.velocity_map[pygame.K_UP] = up
-        self.velocity_map[pygame.K_LEFT] = left
-        self.velocity_map[pygame.K_RIGHT] = right
+        self.velocity_map[pygame.K_DOWN] = change_speed(self.speed, down)
+        self.velocity_map[pygame.K_UP] = change_speed(self.speed, up)
+        self.velocity_map[pygame.K_LEFT] = change_speed(self.speed, left)
+        self.velocity_map[pygame.K_RIGHT] = change_speed(self.speed, right)
 
         self.stop_map = {}
         self.stop_map["walking south"] = "standing south"
@@ -205,7 +201,7 @@ class Player(Animated_Field_Element):
     def tick(self):
         self.animation_tick()
         if self.velocity != stopped:
-            field.move(opposite(self.velocity))
+            field.move(opposite_velocity(self.velocity))
             if field.collision_detected(self):
                 field.move(self.velocity)
 
