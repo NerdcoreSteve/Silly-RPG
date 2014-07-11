@@ -1,12 +1,21 @@
 import sys, pygame, json
 #TODO make editor
+#TODO make some more game content, at least a few rooms and hallways in a space ship
+#TODO   as well as a new set of animations for player
+#TODO consolidate code between game and editor
 #TODO save game to json file in folder specified by a config.json file in assets/json (for now just save player position)
-#TODO
-#TODO do other todos below, npc's, objects and maybe a few other things before tackling the camera
+#TODO interactibles
+#TODO npc's that walk around
+#TODO dialog with npc's, just like some of the later mspaint games, not just a little avatar
+#TODO   but a whole person closeup
+#
 #TODO the camera can be another surface, smaller than the field, then the player would be in the field...
-#TODO once camera is done, do dynamic buffering, perhaps in blocks
-#TODO special effects like earth quakes!
+#TODO can become another npc/person
+#TODO more than one person in your party
+#TODO dynamic buffering, perhaps in blocks
 #TODO cutscenes! move the camera according to a target, which can be "scripted"
+#TODO special effects like earth quakes!
+#TODO do battle map?
 
 #These directions are the only ones that exist in the game world
 #The functions below, change_speed and opposite_velocity, work on this assumption
