@@ -1,58 +1,92 @@
-TODO
-
-ITERATIONS
 *i*
-fix
-animation delays when arrow keys are pressed
-
-*i*
-try to make Animated_Field_Element.set_animation_Frame more DRY
+camera
+    *i*
+    figure out how, exactly, you're going to do this
+    *i*
+    Then put player in field, player may not even have to be any different from any pc
 
 *i*
-look over Animated_Field_Element design, does it look good now?
+consolidate remaining duplicate code between editor and game
 
 *i*
-re-evaluate json structure
+what remaining in-code #TODO's can I get rid of?
 
 *i*
-slim down the player input code, possibly use the command pattern or a variation of it
+hotkeys, from now on any changes need both mouse and hot keys
 
 *i*
-How does the rest of the code look?
+undo-redo
 
 *i*
-Work on the design of the player and redraw her frames
-She should have an ant head on her shirt instead of a flower. No pinks or purples.
+change z depth
+    
+*i*
+right click move down, move up, send to front/back
 
 *i*
-Design some rooms and corridors of a space ship, one that would be in the player character's pretend fantasies. Make all the tiles and build them in the game.
+edit collision rect, drag, edit fields, toggle existence, set to image dimensions
 
 *i*
-license all assets with permissive cc license.
+see list of images, and other assets on side, edit them from there too
 
 *i*
-design and create an editor for this game engine. This will mean more iterations here I'm sure.
-from now on all features added to the game will also be added to the editor right after, and assets and other game content will be added to demonstrate it. Make a note above the iterations to remind yourself of this.
+browse assets/images folder for images to create new field elements
 
 *i*
-npcs and other animated interactables (the equivalent of treasure chests)
+edit player
 
 *i*
-dialog
+save changes to sillyRPG.json
+    
+*i*
+maybe take out object methods belonging to game domain and just make them functions
 
 *i*
-inventory
+both game and editor should have a game file and saved-game file pickers
+    *i*
+    create new games
 
 *i*
-doors
+make some more game content, at least a few rooms and hallways in a space ship
 
 *i*
-battle engine (action rpg? chrono trigger? hmmm..)
+  as well as a new set of animations for player
 
-...?
+*i*
+consolidate code between game and editor
 
-POSSIBLE DESIGN
-In this game
-http://www.mspaintadventures.com/?s=6&p=002153
-you sometimes click on stuff and a new picture appears with dialog that goes over it.
-neat.
+*i*
+save game to json file in folder specified by a config.json file in assets/json (for now just save player position)
+
+*i*
+interactibles
+
+*i*
+npc's that walk around
+
+*i*
+dialog with npc's, just like some of the later mspaint games, not just a little avatar
+
+*i*
+but a whole person closeup
+
+*i*
+the camera can be another surface, smaller than the field, then the player would be in the field...
+
+*i*
+can become another npc/person
+
+*i*
+more than one person in your party
+
+*i*
+dynamic buffering, perhaps in blocks
+
+*i*
+cutscenes! move the camera according to a target, which can be "scripted"
+
+*i*
+special effects like earth quakes!
+
+*i*
+do battle map?

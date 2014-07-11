@@ -130,12 +130,12 @@ class Animated_Field_Element(Field_Element):
 
 class Player(Animated_Field_Element):
 
-    def __init__(self, screen, player_data):
+    def __init__(self, screen_size, player_data):
         Animated_Field_Element.__init__(self, player_data)
         self.speed = int(player_data["walking speed"])
 
         #put player in center of screen
-        screen_rect = screen.get_rect()
+        screen_rect = pygame.Rect([0,0] + screen_size)
         self.rect.centerx = screen_rect.centerx
         self.rect.centery = screen_rect.centery
         self.obstacle_rect = self.obstacle_rect.move([self.rect.left, self.rect.top])
