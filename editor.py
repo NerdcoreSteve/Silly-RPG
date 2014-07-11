@@ -1,4 +1,7 @@
-import sys, pygame, json
+#silly rpg editor
+
+import sys, pygame, json, common
+#TODO consolidate code between editor and game
 #TODO hotkeys, from now on any changes need both mouse and hot keys
 #TODO undo-redo
 #TODO change z depth
@@ -8,18 +11,10 @@ import sys, pygame, json
 #TODO browse assets/images folder for images to create new field elements
 #TODO edit player
 #TODO save changes to sillyRPG.json
-#TODO consolidate code between editor and game
     #TODO maybe take out object methods belonging to game domain and just make them functions
 #TODO both game and editor should have a game file and saved-game file pickers
     #TODO create new games
 
-#These directions are the only ones that exist in the game world
-#The functions below, change_speed and opposite_velocity, work on this assumption
-right   = [ 1,  0]
-left    = [-1,  0]
-up      = [ 0, -1]
-down    = [ 0,  1]
-stopped = [ 0,  0]
 
 #TODO maybe make a decorator for game program elements so I don't need speed functions here?
 #TODO or just maybe a set of subclasses for the game elements?
@@ -152,7 +147,7 @@ class Player(Animated_Field_Element):
         self.obstacle_rect = self.obstacle_rect.move([self.rect.left, self.rect.top])
 
         #set velocity to stopped
-        self.velocity = stopped
+        self.velocity = common.stopped
 
         #TODO replace event keys with command enum and call key stack a command stack
         #initialize maps used to DRY up player code
@@ -164,10 +159,10 @@ class Player(Animated_Field_Element):
         self.animation_state_map[pygame.K_RIGHT] = "walking east"
         
         self.velocity_map = {}
-        self.velocity_map[pygame.K_DOWN] = change_speed(self.speed, down)
-        self.velocity_map[pygame.K_UP] = change_speed(self.speed, up)
-        self.velocity_map[pygame.K_LEFT] = change_speed(self.speed, left)
-        self.velocity_map[pygame.K_RIGHT] = change_speed(self.speed, right)
+        self.velocity_map[pygame.K_DOWN] = change_speed(self.speed, common.down)
+        self.velocity_map[pygame.K_UP] = change_speed(self.speed, common.up)
+        self.velocity_map[pygame.K_LEFT] = change_speed(self.speed, common.left)
+        self.velocity_map[pygame.K_RIGHT] = change_speed(self.speed, common.right)
 
         self.stop_map = {}
         self.stop_map["walking south"] = "standing south"
@@ -194,12 +189,12 @@ class Player(Animated_Field_Element):
             self.velocity = self.velocity_map[self.key_stack[-1]] #peek
             self.set_animation_state(self.animation_state_map[self.key_stack[-1]])
         else:
-            self.velocity = stopped
+            self.velocity = common.stopped
             self.set_animation_state(self.stop_map[self.animation_states["current"]])
 
     def tick(self):
         self.animation_tick()
-        if self.velocity != stopped:
+        if self.velocity != common.stopped:
             field.move(opposite_velocity(self.velocity))
             if field.collision_detected(self):
                 field.move(self.velocity)

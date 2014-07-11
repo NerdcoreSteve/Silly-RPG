@@ -1,4 +1,6 @@
-import sys, pygame, json
+#silly rpg game
+
+import sys, pygame, json, common
 #TODO make editor
 #TODO make some more game content, at least a few rooms and hallways in a space ship
 #TODO   as well as a new set of animations for player
@@ -17,13 +19,6 @@ import sys, pygame, json
 #TODO special effects like earth quakes!
 #TODO do battle map?
 
-#These directions are the only ones that exist in the game world
-#The functions below, change_speed and opposite_velocity, work on this assumption
-right   = [ 1,  0]
-left    = [-1,  0]
-up      = [ 0, -1]
-down    = [ 0,  1]
-stopped = [ 0,  0]
 
 def change_speed(new_speed, velocity):
     def change_velocity_component(new_speed, velocity_component):
@@ -154,7 +149,7 @@ class Player(Animated_Field_Element):
         self.obstacle_rect = self.obstacle_rect.move([self.rect.left, self.rect.top])
 
         #set velocity to stopped
-        self.velocity = stopped
+        self.velocity = common.stopped
 
         #TODO replace event keys with command enum and call key stack a command stack
         #initialize maps used to DRY up player code
@@ -166,10 +161,10 @@ class Player(Animated_Field_Element):
         self.animation_state_map[pygame.K_RIGHT] = "walking east"
         
         self.velocity_map = {}
-        self.velocity_map[pygame.K_DOWN] = change_speed(self.speed, down)
-        self.velocity_map[pygame.K_UP] = change_speed(self.speed, up)
-        self.velocity_map[pygame.K_LEFT] = change_speed(self.speed, left)
-        self.velocity_map[pygame.K_RIGHT] = change_speed(self.speed, right)
+        self.velocity_map[pygame.K_DOWN] = change_speed(self.speed, common.down)
+        self.velocity_map[pygame.K_UP] = change_speed(self.speed, common.up)
+        self.velocity_map[pygame.K_LEFT] = change_speed(self.speed, common.left)
+        self.velocity_map[pygame.K_RIGHT] = change_speed(self.speed, common.right)
 
         self.stop_map = {}
         self.stop_map["walking south"] = "standing south"
@@ -196,12 +191,12 @@ class Player(Animated_Field_Element):
             self.velocity = self.velocity_map[self.key_stack[-1]] #peek
             self.set_animation_state(self.animation_state_map[self.key_stack[-1]])
         else:
-            self.velocity = stopped
+            self.velocity = common.stopped
             self.set_animation_state(self.stop_map[self.animation_states["current"]])
 
     def tick(self):
         self.animation_tick()
-        if self.velocity != stopped:
+        if self.velocity != common.stopped:
             field.move(opposite_velocity(self.velocity))
             if field.collision_detected(self):
                 field.move(self.velocity)
