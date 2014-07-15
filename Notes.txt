@@ -1,4 +1,9 @@
 *i*
+uninstall python 3 and install the latest python 2
+install pygame
+install argo uml and give it a try
+
+*i*
 camera
     *i*
     figure out how, exactly, you're going to do this
