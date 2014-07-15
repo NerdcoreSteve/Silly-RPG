@@ -1,8 +1,4 @@
-*i*
-uninstall python 3 and install the latest python 2
-install pygame
-install argo uml and give it a try
-
+ITERATIONS
 *i*
 camera
     *i*
@@ -95,3 +91,23 @@ special effects like earth quakes!
 
 *i*
 do battle map?
+
+DESIGN
+class Field
+    contains: many Field_Elements
+
+class Field_Element
+    description: elements in a field: tiles, npcs, and other interactibles
+
+class Camera
+    has reference to: field
+    has reference to: field_element
+    function: take_picture
+            
+class Field_Element_Control
+    contains: Field_Element
+    function: tick
+
+there is a list of field element controls, they control any field element they're attached to.
+on one control, tick might look for commands, another might move according to some simple ai, etc
+is a camera a field element?
