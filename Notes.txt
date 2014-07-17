@@ -1,5 +1,9 @@
 ITERATIONS
 *i*
+vim/bash bug
+how do I get vim to recognize .bash_profile while at the same time not making the vim crash when I do a :! ?
+
+*i*
 camera
     *i*
     figure out how, exactly, you're going to do this

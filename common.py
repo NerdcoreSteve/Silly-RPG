@@ -192,3 +192,11 @@ class Player(Animated_Field_Element):
             field.move(opposite_velocity(self.velocity))
             if field.collision_detected(self):
                 field.move(self.velocity)
+
+pygame.init()
+game_data = json.loads(open('assets/json/sillyRPG.json', 'r').read())
+screen = pygame.display.set_mode(game_data["screen size"])
+background_color = 0, 0, 0
+frame_rate = 60
+player = Player(game_data["screen size"], game_data["player"])
+field = Field(game_data["field"])
