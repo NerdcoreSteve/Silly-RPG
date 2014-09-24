@@ -1,0 +1,4 @@
+sensitive interaction, based on what character you are playing
+pushing things around for puzzles
+z-axis for battle and going up and down stairs/slopes? (pressing left would make you go diagonal up or down.)
+You see what you equip could be impleneted by a "mask" something that you put over animated gif animation set. Maybe it also changes behavior. Could be the way things like mech suites and vehicles are implemented.
