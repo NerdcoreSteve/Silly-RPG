@@ -1,5 +1,5 @@
 #silly rpg editor
-import sys, pygame, json, common
+import sys, pygame, json, re, common
 
 class Cursor(object):
     def __init__(self):
@@ -28,20 +28,17 @@ class Editor_Field(common.Field):
         common.Field.__init__(self, field_data)
 
     def move(self, field_element, direction):
-        move_map =   {"up": lambda index: index + 1, "down": lambda index: index - 1}
-        bounds_map = {"up": lambda index: index >= len(self.field_elements), "down": lambda index: index < 0}
-        if direction == "up":
+        if(re.compile("up|down").match(direction)):
+            get_new_index = {"up":   lambda index: index + 1,
+                             "down": lambda index: index - 1}
+            bounds_check  = {"up":   lambda index: index < len(self.field_elements),
+                             "down": lambda index: index >= 0}
+
             old_index = self.field_elements.index(field_element)
-            new_index = move_map[direction](old_index);
-            if bounds_map["up"](new_index):
-                new_index = old_index
-            self.field_elements.insert(new_index, self.field_elements.pop(old_index))
-        elif direction == "down":
-            old_index = self.field_elements.index(field_element)
-            new_index = move_map[direction](old_index);
-            if bounds_map["up"](new_index):
-                new_index = old_index
-            self.field_elements.insert(new_index, self.field_elements.pop(old_index))
+            new_index = get_new_index[direction](old_index);
+
+            if bounds_check[direction](new_index):
+                self.field_elements.insert(new_index, self.field_elements.pop(old_index))
 
 def render(screen, cursor):
     screen.fill(background_color)
