@@ -1,7 +1,5 @@
 #silly rpg editor
 import sys, pygame, json, re, common
-from Tkinter import *
-import tkMessageBox
 
 class Cursor(object):
     def __init__(self):
@@ -42,29 +40,11 @@ class Editor_Field(common.Field):
             if bounds_check[direction](new_index):
                 self.field_elements.insert(new_index, self.field_elements.pop(old_index))
 
-class New_Field_Element_Dialog:
-
-    def __init__(self, master):
-        frame = Frame(master)
-        frame.pack()
-
-        self.button = Button(frame, text="QUIT", fg="red", command = self.file_browser)
-        self.button.pack(side=LEFT)
-
-        self.label_text = var = StringVar()
-        self.label_text.set("25")
-        self.label = Label(frame, textvariable=self.label_text, relief=RAISED)
-        self.label.pack(side=LEFT)
-
-        master.mainloop()
-
-    def file_browser(self):
-        print "TODO file browser"
-
-def render(screen, cursor):
+def render(screen, cursor, mode, clicked_field_element = False):
     screen.fill(background_color)
-    field.blit(screen)
-    cursor.draw(screen)
+    if mode == "field":
+        field.blit(screen)
+        cursor.draw(screen)
     pygame.display.update()
 
 def get_clicked_field_element(field, click_coordinates):
@@ -78,12 +58,12 @@ pygame.init()
 game_data = json.loads(open('assets/json/sillyRPG.json', 'r').read())
 screen = pygame.display.set_mode(game_data["screen size"])
 background_color = 0, 0, 0
-frame_rate = 60
 player = common.Player(game_data["screen size"], game_data["player"])
 field = Editor_Field(game_data["field"])
 clock = pygame.time.Clock()
 cursor = Cursor()
-render(screen, cursor)
+mode = "field"
+render(screen, cursor, mode)
 
 clicked_field_element = False
 while True:
@@ -93,24 +73,27 @@ while True:
     elif event.type == pygame.KEYDOWN:
         if event.key == pygame.K_ESCAPE:
             sys.exit()
-        elif event.key == pygame.K_DOWN:
-            if(clicked_field_element):
-                field.move(clicked_field_element, "down")
-        elif event.key == pygame.K_UP:
-            if(clicked_field_element):
-                field.move(clicked_field_element, "up")
-        elif event.key == pygame.K_n:
-            New_Field_Element_Dialog(Tk())
-    elif event.type == pygame.MOUSEBUTTONDOWN:
-        if event.dict['button'] == 1:
-            clicked_field_element = get_clicked_field_element(field, event.dict['pos'])
-            cursor.attach(clicked_field_element)
-    elif event.type == pygame.MOUSEBUTTONUP:
-        if event.dict['button'] == 1:
-            clicked_field_element == False
-    elif event.type == pygame.MOUSEMOTION:
-        if event.dict['buttons'] == (1, 0, 0):
-            if clicked_field_element:
-                clicked_field_element.reposition(event.dict['rel'])
-                cursor.update_position()
-    render(screen, cursor)
+
+    if mode == "field":
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_DOWN:
+                if(clicked_field_element):
+                    field.move(clicked_field_element, "down")
+            elif event.key == pygame.K_UP:
+                if(clicked_field_element):
+                    field.move(clicked_field_element, "up")
+            elif event.key == pygame.K_n:
+                mode = "tile"
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if event.dict['button'] == 1:
+                clicked_field_element = get_clicked_field_element(field, event.dict['pos'])
+                cursor.attach(clicked_field_element)
+        elif event.type == pygame.MOUSEBUTTONUP:
+            if event.dict['button'] == 1:
+                clicked_field_element == False
+        elif event.type == pygame.MOUSEMOTION:
+            if event.dict['buttons'] == (1, 0, 0):
+                if clicked_field_element:
+                    clicked_field_element.reposition(event.dict['rel'])
+                    cursor.update_position()
+    render(screen, cursor, mode)
